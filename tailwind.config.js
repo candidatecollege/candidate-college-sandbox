@@ -21,7 +21,11 @@ module.exports = {
       },
     },
   },
+  corePlugins: {
+    preflight: true,
+  },
   plugins: [
+    require('@tailwindcss/typography'),
     require('tailwind-scrollbar-hide'),
   ],
 }
