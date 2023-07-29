@@ -1,10 +1,119 @@
-import React from 'react'
+'use client'
+import { Input } from '@/components'
+import Loader from '@/components/Loader'
+import axios from 'axios'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
+import Swal from 'sweetalert2'
 
 const Auth: React.FC<any> = ({ type }) => {
+  const router = useRouter()
+
+  if (localStorage.getItem('token')) {
+    router.push('/')
+  }
+
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const onChangeEmail = (e: any) => { setEmail(e.target.value) }
+  const onChangePassword = (e: any) => { setPassword(e.target.value) }
+
+  const handleLoginUser = async (e: any) => {
+    e.preventDefault()
+
+    setIsLoading(true)
+
+    const formData = new FormData()
+    formData.append('email', email)
+    formData.append('password', password)
+
+    try {
+      const response = await axios.post('https://resource.candidatecollegeind.com/api/login', formData)
+
+      setIsLoading(false)
+
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        icon: 'success',
+        title: 'Successfully log in!'
+      })
+
+      localStorage.setItem('token', response.data.authorization.token)
+
+      router.push('/')
+    } catch (error) {
+      setIsLoading(false)
+      if (error.response.status === 401) {
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          icon: 'error',
+          title: 'Failed to login, username or password is wrong!',
+        })
+      } else {
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          icon: 'error',
+          title: 'Internal server error, please login again later!',
+        })
+      }
+    }
+
+    setEmail("")
+    setPassword("")
+  }
+
   return (
-    <div>
-      
-    </div>
+    <main className="flex flex-col md:flex-row w-full h-screen bg-primary relative items-center justify-center">
+      <section className={`flex flex-col gap-10 ${isLoading ? 'pt-14 pb-6' : 'py-14'} px-8 bg-white w-fit md:w-[45%] rounded-3xl`}>
+        <div className="flex flex-col gap-1 w-full items-center justify-center">
+          <h1 className="h1 text-4xl font-semibold text-primary">Welcome Back!</h1>
+          <p className="text-base text-tersier">Manage All Data for {"CC's"} Website</p>
+        </div>
+
+        <form onSubmit={handleLoginUser} action="post" autoComplete='off' className="flex flex-col gap-4">
+          <Input 
+              label="Email"
+              name="email"
+              type="email"
+              placeholder="candidatecollege@ind.com"
+              value={email}
+              onChange={onChangeEmail}
+              width='full'
+          />
+
+          <Input 
+              label="Password"
+              name="password"
+              type="password"
+              placeholder="**********"
+              value={password}
+              onChange={onChangePassword}
+              width='full'
+          />
+
+          {
+            isLoading ? <Loader /> : (<button about="Login" title="Login" type='submit' className={`bg-secondary text-primary font-medium text-base rounded-full px-2 md:px-5 py-4 text-center cursor-pointer mt-4 hover:bg-primary hover:text-white md:mt-0 w-full duration-700 transition-all`}>Login</button>)
+          }
+        </form>
+      </section>
+
+      <p className="text-sm text-tersier absolute bottom-8 text-center">&copy; Candiate College 2023</p>
+    </main>
   )
 }
 

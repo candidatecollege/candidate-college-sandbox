@@ -6,8 +6,15 @@ import Link from 'next/link'
 import { articlesOnPage, articleMenus } from '@/data/staticData';
 import { Add } from '@mui/icons-material'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
+  const router = useRouter()
+
+  if (!localStorage.getItem('token')) {
+    router.push('/auth')
+  }
+
   const [activeMenu, setActiveMenu] = useState<string>('Articles')
   const [articles, setArticles] = useState<any[]>([])
 

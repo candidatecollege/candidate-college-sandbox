@@ -27,7 +27,7 @@ const Input: React.FC<InputProps> = ({
     <>
       {type !== 'file' ? (
         <div className={`relative ${width == 'half' ? 'w-[50%]' : 'w-full'}`}>
-          <label htmlFor={label} className="sr-only">
+          <label htmlFor={label} className="block text-base text-gray-400">
             {label}
           </label>
           {!isSelect ? (
@@ -35,10 +35,11 @@ const Input: React.FC<InputProps> = ({
               type={type}
               id={label}
               placeholder={placeholder}
-              className="w-full focus:outline-none pe-10 rounded-xl border-gray-200 border-2 sm:text-base p-4"
+              className="w-full focus:outline-none pe-10 rounded-xl border-gray-200 border-2 sm:text-base p-4 text-primary placeholder:text-tersier"
               name={name}
               value={value}
               onChange={onChange}
+              required
             />
           ) : (
             <div className="w-full focus:outline-none pe-10 rounded-xl border-gray-200 border-2 sm:text-base p-4">
