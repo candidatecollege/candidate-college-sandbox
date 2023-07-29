@@ -10,6 +10,8 @@ import { usePathname } from 'next/navigation'
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import { Editor } from '@tinymce/tinymce-react'
+import Image from 'next/image';
+import { PenIcon } from '@/components/icons';
 
 export default function Create() {
   const slug = usePathname().slice(15)
@@ -40,6 +42,20 @@ export default function Create() {
   const [coverLandscape, setCoverLandscape] = useState<any>(null)
   const [body, setBody] = useState<string>('')
 
+  const [oldCover, setOldCover] = useState<string>('')
+  const [oldCoverLandscape, setOldCoverLandscape] = useState<string>('')
+
+  const [isEditCover, setIsEditCover] = useState<boolean>(false)
+  const [isEditCoverLandscape, setIsEditCoverLandscape] = useState<boolean>(false)
+
+  const toggleIsEditCover = () => {
+    setIsEditCover(!isEditCover)
+  }
+
+  const toggleIsEditCoverLandscape = () => {
+    setIsEditCoverLandscape(!isEditCoverLandscape)
+  }
+
   const onChangeTitle = (e: any) => { setTitle(e.target.value) }
   const onChangeAuthor = (e: any) => { setAuthor(e.target.value) }
   const onChangeReadingTime = (e: any) => { setReadingTime(e.target.value) }
@@ -60,9 +76,17 @@ export default function Create() {
     formData.append('author', author)
     formData.append('duration', readingTime)
     formData.append('snippets', snippets)
-    formData.append('cover', cover)
-    formData.append('cover_landscape', coverLandscape)
+    if (cover != null) {
+        formData.append('cover', cover)
+    }
+
+    if (coverLandscape != null) {
+        formData.append('cover_landscape', coverLandscape)
+    }
+    
     formData.append('body', body)
+
+    console.log(formData)
 
     try {
         const response = await axios.post(`https://resource.candidatecollegeind.com/api/articles/${slug}`, formData, {
@@ -80,7 +104,7 @@ export default function Create() {
           timer: 4000,
           timerProgressBar: true,
           icon: 'success',
-          title: 'Successfully edited your new article!',
+          title: 'Successfully edited your article!',
         });
 
         router.push('/articles')
@@ -164,12 +188,14 @@ export default function Create() {
     if (article) {
       setTitle(article?.title ?? ''); // Use optional chaining and nullish coalescing operator (??) to safely set values
       setAuthor(article?.author ?? '');
-      setCategory(article?.category_id ?? '');
+      setCategory(article?.category ?? '');
       setReadingTime(article?.duration ?? null);
       setSnippets(article?.snippets ?? '');
       // Set cover and coverLandscape to null by default since we're handling them separately in the file input fields
       setCover(null);
       setCoverLandscape(null);
+      setOldCover(article?.cover ?? '');
+      setOldCoverLandscape(article?.cover_landscape ?? '');
       setBody(article?.body ?? '');
     }
   }, [article]);
@@ -202,17 +228,21 @@ export default function Create() {
             width="half"
         />
 
-        <Input 
-            label="Category"
-            name="category_id"
-            type="select"
-            placeholder="Category"
-            value={category}
-            onChange={onChangeCategory}
-            isSelect={true}
-            values={categories}
-            width="half"
-        />
+        <div className="w-[50%] focus:outline-none pe-10 rounded-xl border-gray-200 border-2 sm:text-base p-4">
+        <select
+            id='category'
+            name='category'
+            className="h-full rounded-md border-0 bg-transparent py-0 text-gray-400 focus:outline-none focus:ring-0 w-full sm:text-base"
+            onChange={(e) => onChangeCategory(e)}
+        >
+            <option value="">Choose Category</option> {/* Add an empty value to represent the default (non-selected) option */}
+            {categories.map((value: { id: number; name: string }, index: number) => (
+            <option key={index} value={value.id} selected={category === value.name}>
+                {value.name}
+            </option>
+            ))}
+        </select>
+        </div>
 
         <Input 
             label="Author"
@@ -248,7 +278,20 @@ export default function Create() {
           <label htmlFor="Cover" className="block text-base text-gray-400">
             Cover
           </label>
-          <div className="flex">
+          <div className="relative w-[339px] h-[320px] rounded-xl object-cover">
+            <button type='button' onClick={(e) => toggleIsEditCover()} className='bg-secondary rounded-lg flex items-center justify-center p-2 duration-700 transition-all absolute top-3 right-3'>
+                <PenIcon size={'24'} color={'#1f1f1f'} />
+            </button>
+            <Image 
+                width={0}
+                height={0}
+                alt={title}
+                title={title}
+                src={`https://resource.candidatecollegeind.com/storage/${oldCover}`}className={'w-[339px] h-[320px] rounded-xl object-cover'}
+            />
+          </div>
+          {
+            isEditCover ? <div className="flex">
             <input
               type="file"
               name="cover"
@@ -256,14 +299,28 @@ export default function Create() {
               className={`px-8 py-12 border-2 rounded-xl dark:border-gray-200 text-primary w-[50%]`}
               onChange={(e: any) => setCover(e.target.files[0])}
             />
-          </div>
+          </div> : null
+          }
         </fieldset>
 
         <fieldset className="space-y-1 dark:text-gray-100">
           <label htmlFor="Cover Landscape" className="block text-base text-gray-400">
             Cover Landscape
           </label>
-          <div className="flex">
+          <div className="relative w-[50%] h-[340px] rounded-xl object-cover">
+            <button type='button' onClick={(e) => toggleIsEditCoverLandscape()} className='bg-secondary rounded-lg flex items-center justify-center p-2 duration-700 transition-all absolute top-3 right-3'>
+                <PenIcon size={'24'} color={'#1f1f1f'} />
+            </button>
+            <Image 
+                width={0}
+                height={0}
+                alt={title}
+                title={title}
+                src={`https://resource.candidatecollegeind.com/storage/${oldCoverLandscape}`}className={'w-full h-[340px] rounded-xl object-cover'}
+            />
+          </div>
+          {
+            isEditCoverLandscape ? <div className="flex">
             <input
               type="file"
               name="cover_landscape"
@@ -271,7 +328,8 @@ export default function Create() {
               className={`px-8 py-12 border-2 rounded-xl dark:border-gray-200 text-primary w-[50%]`}
               onChange={(e: any) => setCoverLandscape(e.target.files[0])}
             />
-          </div>
+          </div> : null
+          }
         </fieldset>
 
         <label htmlFor="files" className="block text-base text-gray-400">Content</label>
