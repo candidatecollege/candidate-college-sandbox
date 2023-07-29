@@ -1,12 +1,33 @@
-import React, { useRef, useState } from 'react'
-import { Input } from '@/components'
-import { Editor } from '@tinymce/tinymce-react'
+'use client'
+import React, { useEffect, useState, useRef } from 'react'
+import { Input, Main, Sidebar } from '@/components'
+import Link from 'next/link'
+import { articleMenus } from '@/data/staticData';
+import { FormArticle } from '../../components'
+import { ArrowBackIos } from '@mui/icons-material'
 import axios from 'axios';
-import Swal from 'sweetalert2'
-import '../../../styles/styles.css'
+import { usePathname } from 'next/navigation'
+import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
+import { Editor } from '@tinymce/tinymce-react'
 
-const FormArticle: React.FC<any> = ({ categories }) => {
+export default function Create() {
+  const slug = usePathname().slice(15)
+  const [activeMenu, setActiveMenu] = useState<string>('Create Article')
+  const [categories, setCategories] = useState<any[]>([])
+  const [article, setArticle] = useState<any>(null)
+
+  const fetchArticle = async () => {
+    try {
+        const response = await axios.get(`https://resource.candidatecollegeind.com/api/articles/${slug}`)
+
+        setArticle(response.data.data)
+        console.log(response)
+    } catch (error) {
+        console.error(error)
+    }
+  }
+
   const editorRef = useRef<any>(null);
   const router    = useRouter()
 
@@ -19,9 +40,6 @@ const FormArticle: React.FC<any> = ({ categories }) => {
   const [coverLandscape, setCoverLandscape] = useState<any>(null)
   const [body, setBody] = useState<string>('')
 
-  const [oldCover, setOldCover] = useState<string>("")
-  const [oldCoverLandscape, setOldCoverLandscape] = useState<string>("")
-
   const onChangeTitle = (e: any) => { setTitle(e.target.value) }
   const onChangeAuthor = (e: any) => { setAuthor(e.target.value) }
   const onChangeReadingTime = (e: any) => { setReadingTime(e.target.value) }
@@ -32,7 +50,7 @@ const FormArticle: React.FC<any> = ({ categories }) => {
     setBody(content);
   };
 
-  const handleUploadArticle = async (e: any) => {
+  const handleUpdateArticle = async (e: any) => {
     e.preventDefault()
     console.log([title, author, readingTime, category, snippets, cover, coverLandscape, body])
 
@@ -47,7 +65,7 @@ const FormArticle: React.FC<any> = ({ categories }) => {
     formData.append('body', body)
 
     try {
-        const response = await axios.post('https://resource.candidatecollegeind.com/api/articles', formData, {
+        const response = await axios.post(`https://resource.candidatecollegeind.com/api/articles/${slug}`, formData, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'mulipart/form-data',
@@ -62,7 +80,7 @@ const FormArticle: React.FC<any> = ({ categories }) => {
           timer: 4000,
           timerProgressBar: true,
           icon: 'success',
-          title: 'Successfully uploaded your new article!',
+          title: 'Successfully edited your new article!',
         });
 
         router.push('/articles')
@@ -76,7 +94,7 @@ const FormArticle: React.FC<any> = ({ categories }) => {
             timer: 3000,
             timerProgressBar: true,
             icon: 'error',
-            title: 'Failed to upload article, unauthenticated!',
+            title: 'Failed to edit article, unauthenticated!',
           })
         } else {
           Swal.fire({
@@ -86,7 +104,7 @@ const FormArticle: React.FC<any> = ({ categories }) => {
             timer: 3000,
             timerProgressBar: true,
             icon: 'error',
-            title: 'Internal server error, please upload it later!',
+            title: 'Internal server error, please edit it later!',
           })
 
           router.push('/articles')
@@ -125,8 +143,55 @@ const FormArticle: React.FC<any> = ({ categories }) => {
     }
   };
 
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get('https://resource.candidatecollegeind.com/api/article/categories');
+
+      setCategories(response.data.data)
+      console.log(response)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchCategories();
+    fetchArticle();
+  }, []);
+  
+  useEffect(() => {
+    // Only set the state values if the article data is available
+    if (article) {
+      setTitle(article?.title ?? ''); // Use optional chaining and nullish coalescing operator (??) to safely set values
+      setAuthor(article?.author ?? '');
+      setCategory(article?.category_id ?? '');
+      setReadingTime(article?.duration ?? null);
+      setSnippets(article?.snippets ?? '');
+      // Set cover and coverLandscape to null by default since we're handling them separately in the file input fields
+      setCover(null);
+      setCoverLandscape(null);
+      setBody(article?.body ?? '');
+    }
+  }, [article]);
+  
+
   return (
-    <form method="POST" encType='multipart/form-data' onSubmit={handleUploadArticle} className='flex flex-col gap-3 mt-5'>
+    <main className="flex w-full h-screen shadow-lg rounded-3xl bg-white text-primary">
+      {/* Sidebar */}
+      <Sidebar active={'Articles'} />
+
+      {/* Main */}
+      <Main active={'Articles'} description={'Candidate College is an Education Platform that works to facilitate students in Indonesia.'}>
+        <div className="flex flex-row gap-4 mt-10 mb-5 overflow-x-auto overflow-y-hidden w-[750px] h-full no-scrollbar scrollbar-hide">
+          <Link href={'/articles'} about={'Articles'} title={'Articles'} className={`bg-secondary text-primary font-medium text-sm md:text-base rounded-full px-2 md:pl-5 md:pr-[15px] py-3 text-center cursor-pointer mt-6 hover:bg-primary hover:text-white md:mt-0 w-fit h-fit duration-700 transition-all text-4xl`}><ArrowBackIos color='inherit' fontSize='inherit' /></Link>
+          {
+            articleMenus?.map((menu, index) => (
+              <Link href={menu.link} about={menu.name} title={menu.name} key={index} onClick={(e) => setActiveMenu(menu.name)} className={`${menu.name == activeMenu ? 'bg-primary text-white' : 'bg-secondary text-primary'} font-medium text-sm md:text-base rounded-full px-2 md:px-5 py-3 text-center cursor-pointer mt-6 hover:bg-primary hover:text-white md:mt-0 w-full duration-700 transition-all`}>{menu.name}</Link>
+            ))
+          }
+        </div>
+
+        <form method="POST" encType='multipart/form-data' onSubmit={handleUpdateArticle} className='flex flex-col gap-3 mt-5'>
         <Input 
             label="Title"
             name="title"
@@ -238,9 +303,9 @@ const FormArticle: React.FC<any> = ({ categories }) => {
             onEditorChange={handleEditorChange}
         />
         
-        <button about="Submit" title="Submit" type='submit' className={`bg-secondary text-primary font-medium text-sm md:text-base rounded-full px-2 md:px-5 py-3 text-center cursor-pointer mt-6 hover:bg-primary hover:text-white md:mt-0 w-full duration-700 transition-all`}>Upload</button>
-    </form>
+        <button about="Submit" title="Submit" type='submit' className={`bg-secondary text-primary font-medium text-sm md:text-base rounded-full px-2 md:px-5 py-3 text-center cursor-pointer mt-6 hover:bg-primary hover:text-white md:mt-0 w-full duration-700 transition-all`}>Update</button>
+        </form>
+      </Main>
+    </main>
   )
 }
-
-export default FormArticle

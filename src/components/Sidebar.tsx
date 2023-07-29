@@ -21,7 +21,7 @@ const Sidebar: React.FC<any> = ({ active }) => {
     { id: 3, name: 'Events', link: '/events', component:  <AutoAwesomeOutlinedIcon color='inherit' fontSize='inherit' />},
     { id: 4, name: 'Divisions', link: '/divisions', component:  <WorkOutlineOutlinedIcon color='inherit' fontSize='inherit' />},
     { id: 5, name: 'Members', link: '/members', component:  <Groups2OutlinedIcon color='inherit' fontSize='inherit' />},
-    { id: 6, name: 'Testimonials', link: '/testimonials', component:  <InsightsOutlinedIcon color='inherit' fontSize='inherit' />},
+    // { id: 6, name: 'Testimonials', link: '/testimonials', component:  <InsightsOutlinedIcon color='inherit' fontSize='inherit' />},
   ]
 
   const handleLogoutUser = async (e: any) => {
