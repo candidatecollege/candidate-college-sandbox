@@ -23,7 +23,7 @@ export default function Home() {
     }
   }
 
-  const getMonthName = (monthNumber) => {
+  const getMonthName = (monthNumber: any) => {
     const months = [
       "Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -31,7 +31,7 @@ export default function Home() {
     return months[monthNumber];
   }
   
-  const formatDate = (inputDateString) => {
+  const formatDate = (inputDateString: any) => {
     const date = new Date(inputDateString);
     const day = date.getUTCDate().toString().padStart(2, '0');
     const month = getMonthName(date.getUTCMonth());
@@ -41,7 +41,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchArticle()
-  }, [])
+  })
 
   console.log(slug)
 

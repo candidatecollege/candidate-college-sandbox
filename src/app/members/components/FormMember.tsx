@@ -37,8 +37,8 @@ const FormMember: React.FC<any> = ({ closeModal, onUploadMember }) => {
       
       const formData = new FormData()
       formData.append('name', name)
-      formData.append('division_id', parseInt(division))
-      formData.append('batch', parseInt(batch))
+      formData.append('division_id', division)
+      formData.append('batch', batch)
       formData.append('image', image)
       formData.append('position', position)
       formData.append('instagram', instagram)

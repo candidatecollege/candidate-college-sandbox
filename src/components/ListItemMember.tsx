@@ -3,7 +3,7 @@ import React from 'react'
 
 const ListItemMember: React.FC<any> = ({ member, onDeleteMember }) => {
 
-  const handleDeleteMember = async (id) => {
+  const handleDeleteMember = async (id: number) => {
     try {
       onDeleteMember(id)
     } catch (error) {

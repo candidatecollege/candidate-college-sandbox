@@ -41,7 +41,7 @@ export default function Home() {
     }
   }
 
-  const handleUploadMember = async (data) => {
+  const handleUploadMember = async (data: any) => {
     try {
       const response = await axios.post('https://resource.candidatecollegeind.com/api/members', data, {
           headers: {
@@ -61,7 +61,7 @@ export default function Home() {
     }
   }
 
-  const handleDeleteMember = async (id) => {
+  const handleDeleteMember = async (id: number) => {
     try {
       const response = await axios.delete(`https://resource.candidatecollegeind.com/api/members/${id}`, {
         headers: {

@@ -35,9 +35,9 @@ const FormArticle: React.FC<any> = ({ categories }) => {
 
     const formData = new FormData()
     formData.append('title', title)
-    formData.append('category_id', parseInt(category))
+    formData.append('category_id', category)
     formData.append('author', author)
-    formData.append('duration', parseInt(readingTime))
+    formData.append('duration', readingTime)
     formData.append('snippets', snippets)
     formData.append('cover', cover)
     formData.append('cover_landscape', coverLandscape)
@@ -88,7 +88,7 @@ const FormArticle: React.FC<any> = ({ categories }) => {
     setBody('')
   }
 
-  const handleImageUpload = async (file, success, failure) => {
+  const handleImageUpload = async (file: any, success: any, failure: any) => {
     const formData = new FormData();
     formData.append('image', file);
 
