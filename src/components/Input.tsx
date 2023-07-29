@@ -53,7 +53,7 @@ const Input: React.FC<InputProps> = ({
                 {values.map((value: { id: number; name: string }, index: number) => (
                   <>
                     {
-                      name != "division" ? (
+                      name == "division_id" ? (
                         <option key={index} value={value.id}>
                           {value.name}
                         </option>
@@ -80,8 +80,7 @@ const Input: React.FC<InputProps> = ({
               name={name}
               id={label}
               className={`px-8 py-12 border-2 rounded-xl dark:border-gray-200 text-primary ${width == 'half' ? 'w-[50%]' : 'w-full'}`}
-              value={value}
-              onChange={(e) => onChange(e)}
+              onChange={onChange}
             />
           </div>
         </fieldset>

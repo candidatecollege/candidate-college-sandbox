@@ -10,12 +10,16 @@ import { FormDivision } from './components'
 export default function Home() {
   const [activeMenu, setActiveMenu] = useState<string>('Divisions')
   const [openModalAddDivision, setOpenModalAddDivision] = useState<boolean>(false)
+  
+  const closeModal = () => {
+    setOpenModalAddDivision(false)
+  }
 
-  const ModalAddMember = () => {
+  const ModalAddDivision = () => {
     return (
         <section className='w-full h-screen absolute md:flex md:items-start md:justify-center top-0 bg-[rgba(0,0,0,0.5)]'>
             <div className="flex flex-col-gap-2 bg-white rounded-xl h-fit opacity-100 mx-5 mt-[10vh] relative md:w-[45%]">
-                <FormDivision />
+                <FormDivision closeModal={closeModal} />
                 <span className='text-2xl absolute top-4 right-5 text-primary cursor-pointer' onClick={(e) => setOpenModalAddDivision(false)}>
                     <Close fontSize='inherit' color='inherit' />
                 </span>
@@ -76,7 +80,7 @@ export default function Home() {
 
       {/* Modal Member */}
       {
-        openModalAddDivision ? (<ModalAddMember />) : (null)
+        openModalAddDivision ? (<ModalAddDivision />) : (null)
       }
     </main>
   )

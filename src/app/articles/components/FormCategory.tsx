@@ -1,14 +1,58 @@
 import React, { useState } from 'react'
 import { Input } from '@/components'
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const FormCategory = () => {
+  const router    = useRouter()
+
   const [name, setName] = useState<string>('')
 
   const onChangeName = (e: any) => { setName(e.target.value) }
 
-  const handleUploadCategory = (e: any) => {
+  const handleUploadCategory = async (e: any) => {
     e.preventDefault()
-    console.log(name)
+
+    const formData = new FormData()
+    formData.append('name', name)
+
+    try {
+        const response = await axios.post('https://resource.candidatecollegeind.com/api/article/categories', formData, {
+            headers: {
+                Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Jlc291cmNlLmNhbmRpZGF0ZWNvbGxlZ2VpbmQuY29tL2FwaS9sb2dpbiIsImlhdCI6MTY4OTY5NDcwNiwiZXhwIjoxNjg5Njk4MzA2LCJuYmYiOjE2ODk2OTQ3MDYsImp0aSI6Ilo1VU50M3h3Z25ad3BQaW0iLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.tXuegI1dEgU7oPvSw52dBjxtFRelNOBCuy4yxbTOMI0`,
+                'Content-Type': 'mulipart/form-data',
+            },
+        })
+        console.log(response)
+        if (response.data.status == 200) {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                icon: 'success',
+                title: 'Successfully uploaded your new article!',
+            });
+
+            router.push('/articles/categories')
+        } else {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                icon: 'error',
+                title: 'Failed to uploaded your new article, Unauthorized!',
+            });
+        }
+    } catch (error) {
+        console.error('Error posting data: ', error)
+    }
+
+    setName('')
   }
 
   return (

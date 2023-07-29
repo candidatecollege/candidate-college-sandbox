@@ -1,9 +1,14 @@
 import React, { useRef, useState } from 'react'
 import { Input } from '@/components'
 import { Editor } from '@tinymce/tinymce-react'
+import axios from 'axios';
+import Swal from 'sweetalert2'
+import '../../../styles/styles.css'
+import { useRouter } from 'next/navigation';
 
-const FormArticle = () => {
+const FormArticle: React.FC<any> = ({ categories }) => {
   const editorRef = useRef<any>(null);
+  const router    = useRouter()
 
   const [title, setTitle] = useState<string>('')
   const [category, setCategory] = useState<string>('')
@@ -19,17 +24,91 @@ const FormArticle = () => {
   const onChangeReadingTime = (e: any) => { setReadingTime(e.target.value) }
   const onChangeCategory = (e: any) => { setCategory(e.target.value) }
   const onChangeSnippets = (e: any) => { setSnippets(e.target.value) }
-  const onChangeCover = (e: any) => { setCover(e.target.files[0]) }
-  const onChangeCoverLandscape = (e: any) => { setCoverLandscape(editorRef.current?.files[0]) }
 
   const handleEditorChange = (content: any, editor: any) => {
     setBody(content);
   };
 
-  const handleUploadArticle = (e: any) => {
+  const handleUploadArticle = async (e: any) => {
     e.preventDefault()
-    console.log([title, author, readingTime, category, snippets, cover, coverLandscape])
+    console.log([title, author, readingTime, category, snippets, cover, coverLandscape, body])
+
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('category_id', parseInt(category))
+    formData.append('author', author)
+    formData.append('duration', parseInt(readingTime))
+    formData.append('snippets', snippets)
+    formData.append('cover', cover)
+    formData.append('cover_landscape', coverLandscape)
+    formData.append('body', body)
+
+    try {
+        const response = await axios.post('https://resource.candidatecollegeind.com/api/articles', formData, {
+            headers: {
+                Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Jlc291cmNlLmNhbmRpZGF0ZWNvbGxlZ2VpbmQuY29tL2FwaS9sb2dpbiIsImlhdCI6MTY4OTcwMTcwMywiZXhwIjoxNjg5NzA1MzAzLCJuYmYiOjE2ODk3MDE3MDMsImp0aSI6IkJTbHZmRnFaVnhmbmh6SUMiLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.iI-ea8DPla6JtcOGWzfkA7E59paaf0ejkRUy8ePED7w`,
+                'Content-Type': 'mulipart/form-data',
+            },
+        })
+        console.log(response)
+        if (response.data.status == 200) {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                icon: 'success',
+                title: 'Successfully uploaded your new article!',
+            });
+
+            router.push('/articles')
+        } else {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                icon: 'error',
+                title: 'Failed to uploaded your new article, Unauthorized!',
+            });
+        }
+    } catch (error) {
+        console.error('Error posting data: ', error)
+    }
+
+    setTitle('')
+    setAuthor('')
+    setCategory('')
+    setReadingTime('')
+    setSnippets('')
+    setCover(null)
+    setCoverLandscape(null)
+    setBody('')
   }
+
+  const handleImageUpload = async (file, success, failure) => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      // Replace 'YOUR_IMAGE_UPLOAD_API_URL' with your API endpoint for image uploads
+      const response = await axios.post('https://resource.candidatecollegeind.com/api/articles/image/upload', formData, {
+        headers: {
+          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Jlc291cmNlLmNhbmRpZGF0ZWNvbGxlZ2VpbmQuY29tL2FwaS9sb2dpbiIsImlhdCI6MTY4OTY4Mzc5OCwiZXhwIjoxNjg5Njg3Mzk4LCJuYmYiOjE2ODk2ODM3OTgsImp0aSI6IlRNeE9wM1VNYnVOUm9SWlIiLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.s4lIGkByS2n7PAmt_2Y-NQPPdbQ_5MThV43OvqGQnYk`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log(response)
+      const imageUrl = response.data.url;
+      success(imageUrl);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      failure('Image upload failed');
+    }
+  };
 
   return (
     <form method="POST" encType='multipart/form-data' onSubmit={handleUploadArticle} className='flex flex-col gap-3 mt-5'>
@@ -40,7 +119,7 @@ const FormArticle = () => {
             placeholder="Title"
             value={title}
             onChange={onChangeTitle}
-            width="full"
+            width="half"
         />
 
         <Input 
@@ -51,17 +130,8 @@ const FormArticle = () => {
             value={category}
             onChange={onChangeCategory}
             isSelect={true}
-            values={
-                [
-                    { id: 1, name: 'All', },
-                    { id: 2, name: 'Education', },
-                    { id: 3, name: 'Technology', },
-                    { id: 4, name: 'Students', },
-                    { id: 5, name: 'Gen Z', },
-                    { id: 6, name: 'Nowdays', },
-                ]
-            }
-            width="full"
+            values={categories}
+            width="half"
         />
 
         <Input 
@@ -71,7 +141,7 @@ const FormArticle = () => {
             placeholder="Author"
             value={author}
             onChange={onChangeAuthor}
-            width="full"
+            width="half"
         />
 
         <Input 
@@ -81,7 +151,7 @@ const FormArticle = () => {
             placeholder="Reading Time (m)"
             value={readingTime}
             onChange={onChangeReadingTime}
-            width="full"
+            width="half"
         />
 
         <Input 
@@ -91,28 +161,38 @@ const FormArticle = () => {
             placeholder="Snippets"
             value={snippets}
             onChange={onChangeSnippets}
-            width="full"
-        />
-
-        <Input 
-            label="Cover"
-            name="cover"
-            type="file"
-            placeholder="Cover"
-            value={cover}
-            onChange={onChangeCover}
             width="half"
         />
 
-        <Input 
-            label="Cover Landscape"
-            name="cover_landscape"
-            type="file"
-            placeholder="Cover Landscape"
-            value={coverLandscape}
-            onChange={onChangeCoverLandscape}
-            width="half"
-        />
+        <fieldset className="space-y-1 dark:text-gray-100">
+          <label htmlFor="Cover" className="block text-base text-gray-400">
+            Cover
+          </label>
+          <div className="flex">
+            <input
+              type="file"
+              name="cover"
+              id="Cover"
+              className={`px-8 py-12 border-2 rounded-xl dark:border-gray-200 text-primary w-[50%]`}
+              onChange={(e: any) => setCover(e.target.files[0])}
+            />
+          </div>
+        </fieldset>
+
+        <fieldset className="space-y-1 dark:text-gray-100">
+          <label htmlFor="Cover Landscape" className="block text-base text-gray-400">
+            Cover Landscape
+          </label>
+          <div className="flex">
+            <input
+              type="file"
+              name="cover_landscape"
+              id="CoverLandscape"
+              className={`px-8 py-12 border-2 rounded-xl dark:border-gray-200 text-primary w-[50%]`}
+              onChange={(e: any) => setCoverLandscape(e.target.files[0])}
+            />
+          </div>
+        </fieldset>
 
         <label htmlFor="files" className="block text-base text-gray-400">Content</label>
         <Editor 
@@ -130,6 +210,7 @@ const FormArticle = () => {
                 ],
                 images_upload_url: 'https://resource.candidatecollegeind.com/api/articles/image/upload',
                 file_picker_types: 'image',
+                file_picker_callback: handleImageUpload,
                 automatic_uploads: true,
                 toolbar1: 'undo redo | blocks | ' +
                     'bold italic backcolor | alignleft aligncenter ' +
@@ -138,6 +219,7 @@ const FormArticle = () => {
                 toolbar2: 'table tablecellprops tablecopyrow tablecutrow tabledelete tabledeletecol tabledeleterow tableinsertdialog tableinsertcolafter tableinsertcolbefore tableinsertrowafter tableinsertrowbefore tablemergecells tablepasterowafter tablepasterowbefore tableprops tablerowprops tablesplitcells tableclass tablecellclass tablecellvalign tablecellborderwidth tablecellborderstyle tablecaption tablecellbackgroundcolor tablecellbordercolor tablerowheader tablecolheader',
                 content_style: '@import url(\'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap\'); body { font-family:Plus Jakarta Sans,Arial,sans-serif; font-size:16px }'
             }}
+            value={body}
             onEditorChange={handleEditorChange}
         />
         

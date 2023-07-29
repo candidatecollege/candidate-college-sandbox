@@ -53,7 +53,7 @@ export const articlesOnPage = [
 
 export const articleMenus = [
     { id: 0, name: 'Articles', link: '/articles' },
-    { id: 1, name: 'Matrix Articles', link: '' },
+    { id: 1, name: 'Matrix Articles', link: 'https://docs.google.com/spreadsheets/d/13xSq-EF8sPtajiYttLB7__lP-7LSenr3/edit?usp=drive_web&ouid=109273561914642092893&rtpof=true' },
     { id: 2, name: 'Categories', link: '/articles/categories' },
 ]
 

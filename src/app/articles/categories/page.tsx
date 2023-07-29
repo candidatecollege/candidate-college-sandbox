@@ -1,14 +1,28 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Main, Sidebar } from '@/components'
 import { articleMenus } from '@/data/staticData'
 import { Add, Close } from '@mui/icons-material'
 import { FormCategory } from '../components'
+import axios from 'axios'
 
 const Categories = () => {
   const [activeMenu, setActiveMenu] = useState<string>('Categories')
   const [openModalAddCategory, setOpenModalAddCategory] = useState<boolean>(false)
+
+  const [categories, setCategories] = useState<any[]>([])
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get('https://resource.candidatecollegeind.com/api/article/categories');
+
+      setCategories(response.data.data)
+      console.log(response)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const ModalAddCategory = () => {
     return (
@@ -22,6 +36,10 @@ const Categories = () => {
         </section>
     )
   }
+
+  useEffect(() => {
+    fetchCategories()
+  }, [categories])
 
   return (
     <main className="flex w-full h-screen shadow-lg rounded-3xl bg-white text-primary">
@@ -37,6 +55,21 @@ const Categories = () => {
                 ))
               }
             </div>
+
+            <ul className="flex flex-col gap-3">
+              {
+                categories.map((category, index) => (
+                  <li key={index} className="border-gray-400 flex flex-row mb-2 w-[50%]">
+                    <div className="select-none cursor-pointer bg-gray-100 rounded-md flex flex-1 items-center p-4  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                      <div className="flex flex-col rounded-md w-10 h-10 bg-gray-300 justify-center items-center mr-4">📦</div>
+                      <div className="flex-1 pl-1 mr-16">
+                        <div className="font-medium">{category.name}</div>
+                      </div>
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
 
             <div onClick={(e) => setOpenModalAddCategory(true)} className="flex items-center justify-center bg-secondary text-primary w-fit h-fit text-[3rem] p-2 font-extrabold rounded-full absolute right-10 bottom-10 cursor-pointer hover:bg-primary hover:text-white duration-700 transition-all">
                 <Add color='inherit' fontSize='inherit' fontWeight={700} />

@@ -1,7 +1,20 @@
 import { Input } from '@/components'
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
-const FormMember = () => {
+const FormMember: React.FC<any> = ({ closeModal, onUploadMember }) => {
+    const [divisions, setDivisions] = useState<any[]>([])
+
+    const fetchDivisions = async () => {
+      try {
+        const response = await axios.get('https://resource.candidatecollegeind.com/api/divisions')
+        setDivisions(response.data.data)
+        console.log(response)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
     const [name, setName] = useState<string>('')
     const [division, setDivision] = useState<string>('')
     const [batch, setBatch] = useState<string>('')
@@ -14,16 +27,35 @@ const FormMember = () => {
     const onChangeName = (e: any) => { setName(e.target.value) }
     const onChangeDivision = (e: any) => { setDivision(e.target.value) }
     const onChangeBatch = (e: any) => { setBatch(e.target.value) }
-    const onChangeImage = (e: any) => { setImage(e.target.value) }
     const onChangePosition = (e: any) => { setPosition(e.target.value) }
     const onChangeInstagram = (e: any) => { setInstagram(e.target.value) }
     const onChangeLinkedin = (e: any) => { setLinkedin(e.target.value) }
     const onChangeTwitter = (e: any) => { setTwitter(e.target.value) }
   
-    const handleAddMember = (e: any) => {
+    const handleAddMember = async (e: any) => {
       e.preventDefault()
-      console.log(name)
+      
+      const formData = new FormData()
+      formData.append('name', name)
+      formData.append('division_id', parseInt(division))
+      formData.append('batch', parseInt(batch))
+      formData.append('image', image)
+      formData.append('position', position)
+      formData.append('instagram', instagram)
+      formData.append('linkedin', linkedin)
+      formData.append('twitter', twitter)
+
+      try {
+        onUploadMember(formData)
+        closeModal()
+      } catch (error) {
+        console.log(error)
+      }
     }
+
+    useEffect(() => {
+      fetchDivisions()
+    }, [])
   
     return (
       <form method="POST" encType='multipart/form-data' onSubmit={handleAddMember} className='flex flex-col gap-3 mt-5 w-full px-20 py-10'>
@@ -53,16 +85,7 @@ const FormMember = () => {
                 value={division}
                 onChange={onChangeDivision}
                 isSelect={true}
-                values={
-                    [
-                        { id: 1, name: 'All', },
-                        { id: 2, name: 'Edu Fair', },
-                        { id: 3, name: 'Bootcamp', },
-                        { id: 4, name: 'GTKCC', },
-                        { id: 5, name: 'SNBT', },
-                        { id: 6, name: 'LPDP', },
-                    ]
-                }
+                values={divisions}
                 width="full"
             />
 
@@ -77,15 +100,20 @@ const FormMember = () => {
             />
           </div>
 
-          <Input 
-            label="Image"
-            name="cover"
-            type="file"
-            placeholder="Image"
-            value={image}
-            onChange={onChangeImage}
-            width="full"
-         />
+          <fieldset className="space-y-1 dark:text-gray-100">
+            <label htmlFor="Image" className="block text-base text-gray-400">
+              Image
+            </label>
+            <div className="flex">
+              <input
+                type="file"
+                name="image"
+                id="Image"
+                className={`px-8 py-12 border-2 rounded-xl dark:border-gray-200 text-primary w-full`}
+                onChange={(e: any) => setImage(e.target.files[0])}
+              />
+            </div>
+          </fieldset>
 
           <Input 
             label="Position"
