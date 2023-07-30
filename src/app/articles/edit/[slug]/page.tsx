@@ -12,12 +12,20 @@ import { useRouter } from 'next/navigation';
 import { Editor } from '@tinymce/tinymce-react'
 import Image from 'next/image';
 import { PenIcon } from '@/components/icons';
+import { getToken } from '@/utils/token';
+import { setCategoryId } from '@/utils/categoy';
 
 export default function Create() {
   const slug = usePathname().slice(15)
   const [activeMenu, setActiveMenu] = useState<string>('Create Article')
   const [categories, setCategories] = useState<any[]>([])
   const [article, setArticle] = useState<any>(null)
+  const router = useRouter()
+  const storedToken = getToken()
+
+  if (!storedToken) {
+    router.push('/auth')
+  }
 
   const fetchArticle = async () => {
     try {
@@ -31,10 +39,10 @@ export default function Create() {
   }
 
   const editorRef = useRef<any>(null);
-  const router    = useRouter()
 
   const [title, setTitle] = useState<string>('')
   const [category, setCategory] = useState<string>('')
+  const [categoryOld, setCategoryOld] = useState<string>('')
   const [author, setAuthor] = useState<string>('')
   const [readingTime, setReadingTime] = useState<any>(null)
   const [snippets, setSnippets] = useState<string>('')
@@ -72,7 +80,15 @@ export default function Create() {
 
     const formData = new FormData()
     formData.append('title', title)
-    formData.append('category_id', category)
+
+    const oldCategorySelected = setCategoryId(categoryOld, categories)
+
+    if (category != '') {
+      formData.append('category_id', category)
+    } else {
+      formData.append('category_id', oldCategorySelected.toString())
+    }
+
     formData.append('author', author)
     formData.append('duration', readingTime)
     formData.append('snippets', snippets)
@@ -91,7 +107,7 @@ export default function Create() {
     try {
         const response = await axios.post(`https://resource.candidatecollegeind.com/api/articles/${slug}`, formData, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${storedToken}`,
                 'Content-Type': 'mulipart/form-data',
             },
         })
@@ -153,7 +169,7 @@ export default function Create() {
       // Replace 'YOUR_IMAGE_UPLOAD_API_URL' with your API endpoint for image uploads
       const response = await axios.post('https://resource.candidatecollegeind.com/api/articles/image/upload', formData, {
         headers: {
-          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Jlc291cmNlLmNhbmRpZGF0ZWNvbGxlZ2VpbmQuY29tL2FwaS9sb2dpbiIsImlhdCI6MTY4OTY4Mzc5OCwiZXhwIjoxNjg5Njg3Mzk4LCJuYmYiOjE2ODk2ODM3OTgsImp0aSI6IlRNeE9wM1VNYnVOUm9SWlIiLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.s4lIGkByS2n7PAmt_2Y-NQPPdbQ_5MThV43OvqGQnYk`,
+          Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'multipart/form-data',
         },
       });
@@ -188,7 +204,8 @@ export default function Create() {
     if (article) {
       setTitle(article?.title ?? ''); // Use optional chaining and nullish coalescing operator (??) to safely set values
       setAuthor(article?.author ?? '');
-      setCategory(article?.category ?? '');
+      setCategory('');
+      setCategoryOld(article?.category ?? '');
       setReadingTime(article?.duration ?? null);
       setSnippets(article?.snippets ?? '');
       // Set cover and coverLandscape to null by default since we're handling them separately in the file input fields
@@ -237,7 +254,7 @@ export default function Create() {
         >
             <option value="">Choose Category</option> {/* Add an empty value to represent the default (non-selected) option */}
             {categories.map((value: { id: number; name: string }, index: number) => (
-            <option key={index} value={value.id} selected={category === value.name}>
+            <option key={index} value={value.id} selected={categoryOld === value.name}>
                 {value.name}
             </option>
             ))}

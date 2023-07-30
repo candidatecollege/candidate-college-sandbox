@@ -6,10 +6,19 @@ import { articleMenus } from '@/data/staticData';
 import { FormArticle } from '../components'
 import { ArrowBackIos } from '@mui/icons-material'
 import axios from 'axios';
+import { getToken } from '@/utils/token';
+import { useRouter } from 'next/navigation';
 
 export default function Create() {
   const [activeMenu, setActiveMenu] = useState<string>('Create Article')
   const [categories, setCategories] = useState<any[]>([])
+  const router = useRouter()
+
+  const storedToken = getToken()
+
+  if (!storedToken) {
+    router.push('/auth')
+  }
 
   const fetchCategories = async () => {
     try {

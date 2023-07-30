@@ -5,10 +5,12 @@ import axios from 'axios';
 import Swal from 'sweetalert2'
 import '../../../styles/styles.css'
 import { useRouter } from 'next/navigation';
+import { getToken } from '@/utils/token';
 
 const FormArticle: React.FC<any> = ({ categories }) => {
   const editorRef = useRef<any>(null);
   const router    = useRouter()
+  const storedToken = getToken()
 
   const [title, setTitle] = useState<string>('')
   const [category, setCategory] = useState<string>('')
@@ -49,7 +51,7 @@ const FormArticle: React.FC<any> = ({ categories }) => {
     try {
         const response = await axios.post('https://resource.candidatecollegeind.com/api/articles', formData, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${storedToken}`,
                 'Content-Type': 'mulipart/form-data',
             },
         })
@@ -111,7 +113,7 @@ const FormArticle: React.FC<any> = ({ categories }) => {
       // Replace 'YOUR_IMAGE_UPLOAD_API_URL' with your API endpoint for image uploads
       const response = await axios.post('https://resource.candidatecollegeind.com/api/articles/image/upload', formData, {
         headers: {
-          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Jlc291cmNlLmNhbmRpZGF0ZWNvbGxlZ2VpbmQuY29tL2FwaS9sb2dpbiIsImlhdCI6MTY4OTY4Mzc5OCwiZXhwIjoxNjg5Njg3Mzk4LCJuYmYiOjE2ODk2ODM3OTgsImp0aSI6IlRNeE9wM1VNYnVOUm9SWlIiLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.s4lIGkByS2n7PAmt_2Y-NQPPdbQ_5MThV43OvqGQnYk`,
+          Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'multipart/form-data',
         },
       });

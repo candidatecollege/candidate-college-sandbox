@@ -10,11 +10,13 @@ import { useRouter } from 'next/navigation'
 import Card from '@/components/Card'
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { getToken } from '@/utils/token'
 
 export default function Home() {
   const router = useRouter()
+  const storedToken = getToken()
 
-  if (!localStorage.getItem('token')) {
+  if (!storedToken) {
     router.push('/auth')
   }
 
@@ -56,7 +58,7 @@ export default function Home() {
             try {
                 const response = await axios.delete(`https://resource.candidatecollegeind.com/api/articles/${slug}`, {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                        Authorization: `Bearer ${storedToken}`,
                     },
                 });
 

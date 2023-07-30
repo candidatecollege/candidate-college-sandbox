@@ -1,6 +1,7 @@
 'use client'
 import { Input } from '@/components'
 import Loader from '@/components/Loader'
+import { getToken, setTokenWithExpiration } from '@/utils/token'
 import axios from 'axios'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -9,8 +10,9 @@ import Swal from 'sweetalert2'
 
 const Auth: React.FC<any> = ({ type }) => {
   const router = useRouter()
-
-  if (localStorage.getItem('token')) {
+  const storedToken = getToken()
+  
+  if (storedToken) {
     router.push('/')
   }
 
@@ -45,7 +47,7 @@ const Auth: React.FC<any> = ({ type }) => {
         title: 'Successfully log in!'
       })
 
-      localStorage.setItem('token', response.data.authorization.token)
+      setTokenWithExpiration(response.data.authorization.token, 3600)
 
       router.push('/')
     } catch (error) {
