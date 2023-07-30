@@ -197,7 +197,7 @@ export default function Create() {
   useEffect(() => {
     fetchCategories();
     fetchArticle();
-  }, []);
+  }, [fetchArticle]);
   
   useEffect(() => {
     // Only set the state values if the article data is available

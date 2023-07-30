@@ -6,7 +6,6 @@ import { articleMenus } from '@/data/staticData'
 import { AddRounded, Close } from '@mui/icons-material'
 import { FormCategory } from '../components'
 import axios from 'axios'
-import { PenIcon, TrashIcon } from '@/components/icons'
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { getToken } from '@/utils/token'
@@ -32,10 +31,6 @@ const Categories = () => {
 
   const router = useRouter()
   const storedToken = getToken()
-
-  if (!storedToken) {
-    router.push('/auth')
-  }
 
   const fetchCategories = async () => {
     setIsLoading(true)
@@ -136,6 +131,12 @@ const Categories = () => {
       </section>
     );
   };
+
+  useEffect(() => {
+    if (!storedToken) {
+      router.push('/auth');
+    }
+  }, [storedToken, router]);
 
   useEffect(() => {
     fetchCategories()

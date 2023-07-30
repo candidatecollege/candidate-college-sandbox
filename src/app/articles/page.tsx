@@ -16,10 +16,6 @@ export default function Home() {
   const router = useRouter()
   const storedToken = getToken()
 
-  if (!storedToken) {
-    router.push('/auth')
-  }
-
   const [activeMenu, setActiveMenu] = useState<string>('Articles')
   const [articles, setArticles] = useState<any[]>([])
   const articlesOnLoading: any = [1, 2, 3, 4, 5, 6]
@@ -87,6 +83,12 @@ export default function Home() {
         }
     })
   }
+
+  useEffect(() => {
+    if (!storedToken) {
+      router.push('/auth');
+    }
+  }, [storedToken, router]);
 
   useEffect(() => {
     fetchArticles()

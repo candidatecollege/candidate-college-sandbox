@@ -16,10 +16,6 @@ export default function Create() {
 
   const storedToken = getToken()
 
-  if (!storedToken) {
-    router.push('/auth')
-  }
-
   const fetchCategories = async () => {
     try {
       const response = await axios.get('https://resource.candidatecollegeind.com/api/article/categories');
@@ -30,6 +26,12 @@ export default function Create() {
       console.error(error)
     }
   }
+
+  useEffect(() => {
+    if (!storedToken) {
+      router.push('/auth');
+    }
+  }, [storedToken, router]);
 
   useEffect(() => {
     fetchCategories()
