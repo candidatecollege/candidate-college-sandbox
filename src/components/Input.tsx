@@ -1,3 +1,4 @@
+import { convertToDefaultDateValue, defaultValueDate } from '@/utils/time';
 import React from 'react';
 
 interface InputProps {
@@ -37,7 +38,7 @@ const Input: React.FC<InputProps> = ({
               placeholder={placeholder}
               className="w-full focus:outline-none pe-10 rounded-xl border-gray-200 border-2 sm:text-base p-4 text-primary placeholder:text-tersier"
               name={name}
-              value={value}
+              value={type == 'date' ? convertToDefaultDateValue(value) : value}
               onChange={onChange}
               required
             />
@@ -54,7 +55,7 @@ const Input: React.FC<InputProps> = ({
                 {values.map((value: { id: number; name: string }, index: number) => (
                   <>
                     {
-                      name == "division_id" ? (
+                      name == "division_id" || name == "category_id" || name == "type_id" ? (
                         <option key={index} value={value.id}>
                           {value.name}
                         </option>

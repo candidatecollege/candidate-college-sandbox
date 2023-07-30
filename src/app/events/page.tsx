@@ -111,11 +111,11 @@ export default function Home() {
           {
               isLoading ? 
               eventsOnLoading.map((event: any, index: any) => (
-                <Card data={event} isLoading={true} key={index} onDelete={() => handleDeleteEvent(event.slug)} />
+                <Card data={event} type={'Event'} isLoading={true} key={index} onDelete={() => handleDeleteEvent(event.slug)} />
               ))
               :
               events.map((event: any, index: any) => (
-                <Card data={event} isLoading={false} key={index} onDelete={() => handleDeleteEvent(event.slug)} />
+                <Card data={event} type={'Event'} isLoading={false} key={index} onDelete={() => handleDeleteEvent(event.slug)} />
               ))
           }
         </div>

@@ -52,7 +52,7 @@ const FormArticle: React.FC<any> = ({ categories }) => {
         const response = await axios.post('https://resource.candidatecollegeind.com/api/articles', formData, {
             headers: {
                 Authorization: `Bearer ${storedToken}`,
-                'Content-Type': 'mulipart/form-data',
+                'Content-Type': 'multipart/form-data',
             },
         })
         console.log(response)

@@ -1,16 +1,22 @@
 import React, { useRef, useState } from 'react'
 import { Input } from '@/components'
 import { Editor } from '@tinymce/tinymce-react'
+import { getToken } from '@/utils/token';
+import axios, { isAxiosError } from 'axios';
+import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 
 const FormEvent = () => {
   const editorRef = useRef<any>(null);
+  const storedToken = getToken()
+  const router = useRouter()
 
   const [name, setName] = useState<string>('')
   const [category, setCategory] = useState<string>('')
   const [type, setType] = useState<string>('')
   const [linkRegistration, setLinkRegistration] = useState<string>('')
-  const [cover, setCover] = useState<string>('')
-  const [coverLandscape, setCoverLandscape] = useState<string>('')
+  const [cover, setCover] = useState<any>(null)
+  const [coverLandscape, setCoverLandscape] = useState<any>(null)
   const [body, setBody] = useState<string>('')
   const [hostedBy, setHostedBy] = useState<string>('')
   const [startDateTime, setStartDateTime] = useState<string>('')
@@ -35,9 +41,84 @@ const FormEvent = () => {
   const onChangeEndRegistrationDateTime = (e: any) => { setEndRegistrationDateTime(e.target.value) }
   const onChangeEndDateTime = (e: any) => { setEndDateTime(e.target.value) }
 
-  const handleUploadEvent = (e: any) => {
+  const handleUploadEvent = async (e: any) => {
     e.preventDefault()
-    console.log(name)
+
+    const formData = new FormData()
+    formData.append('name', name)
+    formData.append('category_id', category)
+    formData.append('type_id', type)
+    formData.append('link_registration', linkRegistration)
+    formData.append('cover', cover)
+    formData.append('cover_landscape', coverLandscape)
+    formData.append('hosted_by', hostedBy)
+    formData.append('snippets', snippets)
+    formData.append('body', body)
+    formData.append('start_date_time', startDateTime)
+    formData.append('registration_date_time', registrationDateTime)
+    formData.append('end_registration_date_time', endRegistrationDateTime)
+    formData.append('end_date_time', endDateTime)
+
+    try {
+        const response = await axios.post('https://resource.candidatecollegeind.com/api/events', formData, {
+            headers: {
+                Authorization: `Bearer ${storedToken}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            icon: 'success',
+            title: 'Successfully uploaded your new event!',
+        });
+  
+        router.push('/events')
+        console.log(response)
+    } catch (error) {
+        console.error(error)
+        if (isAxiosError(error) && error.response && error.response.status === 401) {
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              icon: 'error',
+              title: 'Failed to upload event, unauthenticated!',
+            })
+          } else {
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              icon: 'error',
+              title: 'Internal server error, please upload it later!',
+            })
+  
+            router.push('/events')
+          }
+    }
+
+    setName('')
+    setCategory('')
+    setType('')
+    setLinkRegistration('')
+    setCover(null)
+    setCoverLandscape(null)
+    setHostedBy('')
+    setSnippets('')
+    setBody('')
+    setStartDateTime('')
+    setRegistrationDateTime('')
+    setEndRegistrationDateTime('')
+    setEndDateTime('')
   }
 
   return (
@@ -49,7 +130,7 @@ const FormEvent = () => {
             placeholder="Name"
             value={name}
             onChange={onChangeName}
-            width="full"
+            width="half"
         />
 
         <Input 
@@ -70,7 +151,7 @@ const FormEvent = () => {
                     { id: 6, name: 'LPDP', },
                 ]
             }
-            width="full"
+            width="half"
         />
 
         <Input 
@@ -87,7 +168,7 @@ const FormEvent = () => {
                     { id: 2, name: 'Eksternal', },
                 ]
             }
-            width="full"
+            width="half"
         />
 
         <Input 
@@ -97,28 +178,38 @@ const FormEvent = () => {
             placeholder="Link Registration"
             value={linkRegistration}
             onChange={onChangeLinkRegistration}
-            width="full"
-        />
-
-        <Input 
-            label="Cover"
-            name="cover"
-            type="file"
-            placeholder="Cover"
-            value={cover}
-            onChange={onChangeCover}
             width="half"
         />
 
-        <Input 
-            label="Cover Landscape"
-            name="cover_landscape"
-            type="file"
-            placeholder="Cover Landscape"
-            value={coverLandscape}
-            onChange={onChangeCoverLandscape}
-            width="half"
-        />
+        <fieldset className="space-y-1 dark:text-gray-100">
+          <label htmlFor="Cover" className="block text-base text-gray-400">
+            Cover
+          </label>
+          <div className="flex">
+            <input
+              type="file"
+              name="cover"
+              id="Cover"
+              className={`px-8 py-12 border-2 rounded-xl dark:border-gray-200 text-primary w-[50%]`}
+              onChange={(e: any) => setCover(e.target.files[0])}
+            />
+          </div>
+        </fieldset>
+
+        <fieldset className="space-y-1 dark:text-gray-100">
+          <label htmlFor="Cover Landscape" className="block text-base text-gray-400">
+            Cover Landscape
+          </label>
+          <div className="flex">
+            <input
+              type="file"
+              name="cover_landscape"
+              id="CoverLandscape"
+              className={`px-8 py-12 border-2 rounded-xl dark:border-gray-200 text-primary w-[50%]`}
+              onChange={(e: any) => setCoverLandscape(e.target.files[0])}
+            />
+          </div>
+        </fieldset>
 
         <Input 
             label="Hosted By"
@@ -127,7 +218,7 @@ const FormEvent = () => {
             placeholder="Hosted By"
             value={hostedBy}
             onChange={onChangeHostedBy}
-            width="full"
+            width="half"
         />
 
         <Input 
@@ -137,7 +228,7 @@ const FormEvent = () => {
             placeholder="Snippets"
             value={snippets}
             onChange={onChangeSnippets}
-            width="full"
+            width="half"
         />
 
         <label htmlFor="files" className="block text-base text-gray-400">Content</label>
@@ -171,41 +262,41 @@ const FormEvent = () => {
         <Input 
             label="Start Date Time"
             name="start_date_time"
-            type="text"
+            type="date"
             placeholder="Start Date Time"
             value={startDateTime}
             onChange={onChangeStartDateTime}
-            width="full"
+            width="half"
         />          
 
         <Input 
             label="Registration Date Time"
             name="registration_date_time"
-            type="text"
+            type="date"
             placeholder="Registration Date Time"
             value={registrationDateTime}
             onChange={onChangeRegistrationDateTime}
-            width="full"
+            width="half"
         />
 
         <Input 
             label="End Registration Date Time"
             name="end_registration_date_time"
-            type="text"
+            type="date"
             placeholder="End Registration Date Time"
             value={endRegistrationDateTime}
             onChange={onChangeEndRegistrationDateTime}
-            width="full"
+            width="half"
         />
 
         <Input 
             label="End Date Time"
             name="end_date_time"
-            type="text"
+            type="date"
             placeholder="End Date Time"
             value={endDateTime}
             onChange={onChangeEndDateTime}
-            width="full"
+            width="half"
         />
 
         <button about="Submit" title="Submit" type='submit' className={`bg-secondary text-primary font-medium text-sm md:text-base rounded-full px-2 md:px-5 py-3 text-center cursor-pointer mt-6 hover:bg-primary hover:text-white md:mt-0 w-full duration-700 transition-all`}>Upload</button>

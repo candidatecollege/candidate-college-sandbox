@@ -15,17 +15,13 @@ import { PenIcon } from '@/components/icons';
 import { getToken } from '@/utils/token';
 import { setCategoryId } from '@/utils/categoy';
 
-export default function Create() {
+export default function Edit() {
   const slug = usePathname().slice(15)
-  const [activeMenu, setActiveMenu] = useState<string>('Create Article')
+  const [activeMenu, setActiveMenu] = useState<string>('Edit Article')
   const [categories, setCategories] = useState<any[]>([])
   const [article, setArticle] = useState<any>(null)
   const router = useRouter()
   const storedToken = getToken()
-
-  if (!storedToken) {
-    router.push('/auth')
-  }
 
   const fetchArticle = async () => {
     try {

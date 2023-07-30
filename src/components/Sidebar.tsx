@@ -69,7 +69,7 @@ const Sidebar: React.FC<any> = ({ active }) => {
           timer: 3000,
           timerProgressBar: true,
           icon: 'error',
-          title: 'Internal server error, please login again later!',
+          title: 'Internal server error, please logout again later!',
         })
       }
     }

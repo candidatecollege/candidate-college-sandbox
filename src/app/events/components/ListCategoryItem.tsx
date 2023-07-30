@@ -6,7 +6,7 @@ const ListCategoryItem: React.FC<any> = ({ category, handleDeleteCategory, isLoa
     <>
         {
             isLoading ?
-            <li className="border-gray-400 flex flex-row mb-2 w-[50%] relative items-center bg-gradient-to-r from-gray-100 to-gray-300 animate-pulse">
+            <li className="flex flex-row mb-2 w-[50%] relative items-center bg-gradient-to-r from-gray-100 to-gray-300 animate-pulse rounded-xl">
                 <div className="select-none cursor-pointer bg-gray-100 rounded-md flex flex-1 items-center p-4  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
                     <div className="flex flex-col rounded-md w-10 h-10 bg-gray-300 justify-center items-center mr-4 bg-gradient-to-r from-gray-300 to-gray-400 animate-pulse"></div>
                     <div className="flex-1 pl-1 mr-16">
