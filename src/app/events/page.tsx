@@ -1,13 +1,97 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Main, Sidebar } from '@/components'
 import Image from 'next/image'
 import Link from 'next/link'
 import { articlesOnPage, eventMenus } from '@/data/staticData';
-import { Add } from '@mui/icons-material'
+import { AddRounded } from '@mui/icons-material'
+import { useRouter } from 'next/navigation'
+import { getToken } from '@/utils/token'
+import axios from 'axios'
+import Card from '@/components/Card'
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 export default function Home() {
-const [activeMenu, setActiveMenu] = useState<string>('Events')
+  const router = useRouter()
+  const storedToken = getToken()
+  const [activeMenu, setActiveMenu] = useState<string>('Events')
+  const [events, setEvents] = useState<any[]>([])
+  const eventsOnLoading: any = [1, 2, 3, 4, 5, 6]
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+
+  const fetchEvents = async () => {
+    setIsLoading(true)
+
+    try {
+      const response = await axios.get('https://resource.candidatecollegeind.com/api/events');
+
+      setTimeout(() => {
+        setEvents(response.data.data)
+        setIsLoading(false) // After setting the data, set isLoading to false
+      }, 2000)
+      
+    } catch (error) {
+      setIsLoading(false)
+      console.error(error)
+    }
+  }
+
+  const handleDeleteEvent = async (slug: any) => {
+    const MySwal = withReactContent(Swal)
+
+    MySwal.fire({
+        title: 'Are you sure?',
+        text: 'You are about to delete the event. This action cannot be undone!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#1B4E6B',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+    }).then(async (result: any) => {
+        if (result.isConfirmed) {
+            try {
+                const response = await axios.delete(`https://resource.candidatecollegeind.com/api/events/${slug}`, {
+                    headers: {
+                        Authorization: `Bearer ${storedToken}`,
+                    },
+                });
+
+                console.log(response);
+
+                // Optionally show a success message
+                MySwal.fire({
+                    title: 'Deleted!',
+                    text: 'The event has been deleted.',
+                    icon: 'success',
+                });
+
+                // Perform any other actions after successful deletion, e.g., redirecting the user, refreshing the article list, etc.
+                fetchEvents()
+
+            } catch (error) {
+                console.error(error);
+
+                // Show an error message if the delete operation fails
+                MySwal.fire({
+                    title: 'Error',
+                    text: 'Failed to delete the event. Please try again later.',
+                    icon: 'error',
+                });
+            }
+        }
+    })
+  }
+
+  useEffect(() => {
+    if (!storedToken) {
+      router.push('/auth')
+    }
+  }, [storedToken, router])
+
+  useEffect(() => {
+    fetchEvents()
+  }, [])
 
   return (
     <main className="flex w-full h-screen shadow-lg rounded-3xl bg-white text-primary">
@@ -16,46 +100,28 @@ const [activeMenu, setActiveMenu] = useState<string>('Events')
 
       {/* Main */}
       <Main active={'Events'} description={'Candidate College is an Education Platform that works to facilitate students in Indonesia.'}>
-        <div className="flex flex-row gap-4 mt-10 mb-5 overflow-x-auto overflow-y-hidden w-[400px] h-full no-scrollbar scrollbar-hide">
+        <div className="flex flex-row gap-4 mt-10 mb-5 overflow-x-auto overflow-y-hidden w-[800px] h-full no-scrollbar scrollbar-hide">
                 {
                   eventMenus?.map((menu, index) => (
-                    <Link href={menu.link} about={menu.name} title={menu.name} key={index} onClick={(e) => setActiveMenu(menu.name)} className={`${menu.name == activeMenu ? 'bg-primary text-white' : 'bg-secondary text-primary'} font-medium text-sm md:text-base rounded-full px-2 md:px-5 py-3 text-center cursor-pointer mt-6 hover:bg-primary hover:text-white md:mt-0 w-full duration-700 transition-all`}>{menu.name}</Link>
+                    <Link href={menu.link} about={menu.name} title={menu.name} key={index} onClick={(e) => setActiveMenu(menu.name)} className={`${menu.name == activeMenu ? 'bg-primary text-white' : 'bg-secondary text-primary'} font-medium text-sm md:text-base rounded-full px-2 md:px-5 py-3 text-center cursor-pointer mt-6 hover:bg-primary hover:text-white md:mt-0 w-fit duration-700 transition-all`}>{menu.name}</Link>
                   ))
                 }
         </div>
         <div className="grid grid-cols-3 gap-4">
-            {
-                  articlesOnPage.map((article, index) => (
-                    <div key={index} className={`flex-col gap-2 md:items-center mb-4 md:gap-2 flex`}>
-                      <Image 
-                        width={100}
-                        height={50}
-                        src={article.coverLandscape}
-                        alt={article.title}
-                        title={article.title}
-                        className='w-full md:flex-1 h-full rounded-xl object-cover'
-                        priority
-                      />
-
-                      <div className="md:flex md:flex-1 flex-col gap hidden">
-                        <h3 className="font-semibold text-2xl text-primary">
-                          {article.title}
-                        </h3>
-                        <p className="font-normal text-base text-gray">
-                          {article.snippets}
-                        </p>
-
-                        <p className="font-normal text-xs text-gray mt-5">
-                          {article.publishedAt} | {article.duration} min read
-                        </p>
-                      </div>
-                    </div>
-                  ))
-                }
+          {
+              isLoading ? 
+              eventsOnLoading.map((event: any, index: any) => (
+                <Card data={event} isLoading={true} key={index} onDelete={() => handleDeleteEvent(event.slug)} />
+              ))
+              :
+              events.map((event: any, index: any) => (
+                <Card data={event} isLoading={false} key={index} onDelete={() => handleDeleteEvent(event.slug)} />
+              ))
+          }
         </div>
 
         <Link href={'/events/create'} about='Create Article' title='Create Article' className="flex items-center justify-center bg-secondary text-primary w-fit h-fit text-[3rem] p-2 font-semibold rounded-full absolute right-10 bottom-10 cursor-pointer hover:bg-primary hover:text-white duration-700 transition-all">
-                <Add color='inherit' fontSize='inherit' />
+                <AddRounded color='inherit' fontSize='inherit' />
         </Link>
       </Main>
     </main>

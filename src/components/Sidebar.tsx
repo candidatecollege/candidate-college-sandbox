@@ -10,6 +10,7 @@ import Link from 'next/link';
 import axios, { isAxiosError } from 'axios';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
+import { getToken } from '@/utils/token';
 
 const Sidebar: React.FC<any> = ({ active }) => {
   const router = useRouter()
@@ -30,7 +31,7 @@ const Sidebar: React.FC<any> = ({ active }) => {
     try {
       const response = await axios.post('https://resource.candidatecollegeind.com/api/logout', null, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
+          Authorization: `Bearer ${getToken()}`
         }
       })
 

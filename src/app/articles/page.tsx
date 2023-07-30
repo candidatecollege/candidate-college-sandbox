@@ -112,11 +112,11 @@ export default function Home() {
             {
               isLoading ? 
               articlesOnLoading.map((article: any, index: any) => (
-                <Card article={article} isLoading={true} key={index} onDelete={() => handleDeleteArticle(article.slug)} />
+                <Card data={article} isLoading={true} key={index} onDelete={() => handleDeleteArticle(article.slug)} />
               ))
               :
               articles.map((article: any, index: any) => (
-                <Card article={article} isLoading={false} key={index} onDelete={() => handleDeleteArticle(article.slug)} />
+                <Card data={article} isLoading={false} key={index} onDelete={() => handleDeleteArticle(article.slug)} />
               ))
             }
         </div>

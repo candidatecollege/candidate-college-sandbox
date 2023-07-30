@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { Main, Sidebar } from '@/components'
 import { eventMenus } from '@/data/staticData'
-import { Add, Close } from '@mui/icons-material'
+import { AddRounded, Close } from '@mui/icons-material'
 import { FormCategory } from '../components'
 
 const Categories = () => {
@@ -30,16 +30,16 @@ const Categories = () => {
 
       {/* Main */}
       <Main active={'Categories'} description={'Candidate College is an Education Platform that works to facilitate students in Indonesia.'}>
-            <div className="flex flex-row gap-4 mt-10 mb-5 overflow-x-auto overflow-y-hidden w-[400px] h-full no-scrollbar scrollbar-hide">
+            <div className="flex flex-row gap-4 mt-10 mb-5 overflow-x-auto overflow-y-hidden w-[800px] h-full no-scrollbar scrollbar-hide">
               {
                 eventMenus?.map((menu, index) => (
-                  <Link href={menu.link} about={menu.name} title={menu.name} key={index} onClick={(e) => setActiveMenu(menu.name)} className={`${menu.name == activeMenu ? 'bg-primary text-white' : 'bg-secondary text-primary'} font-medium text-sm md:text-base rounded-full px-2 md:px-5 py-3 text-center cursor-pointer mt-6 hover:bg-primary hover:text-white md:mt-0 w-full duration-700 transition-all`}>{menu.name}</Link>
+                  <Link href={menu.link} about={menu.name} title={menu.name} key={index} onClick={(e) => setActiveMenu(menu.name)} className={`${menu.name == activeMenu ? 'bg-primary text-white' : 'bg-secondary text-primary'} font-medium text-sm md:text-base rounded-full px-2 md:px-5 py-3 text-center cursor-pointer mt-6 hover:bg-primary hover:text-white md:mt-0 w-fit duration-700 transition-all`}>{menu.name}</Link>
                 ))
               }
             </div>
 
             <div onClick={(e) => setOpenModalAddCategory(true)} className="flex items-center justify-center bg-secondary text-primary w-fit h-fit text-[3rem] p-2 font-extrabold rounded-full absolute right-10 bottom-10 cursor-pointer hover:bg-primary hover:text-white duration-700 transition-all">
-                <Add color='inherit' fontSize='inherit' fontWeight={700} />
+                <AddRounded color='inherit' fontSize='inherit' fontWeight={700} />
             </div>
       </Main>
       

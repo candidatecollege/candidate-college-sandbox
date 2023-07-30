@@ -19,7 +19,7 @@ export default function Home() {
   const ModalAddMember = () => {
     return (
       <section className='w-full h-screen absolute md:flex md:items-start md:justify-center top-0 bg-[rgba(0,0,0,0.5)]'>
-        <div className="flex flex-col-gap-2 bg-white rounded-xl h-fit opacity-100 mx-5 mt-[8vh] relative md:w-[45%]">
+        <div className="flex flex-col-gap-2 bg-white rounded-xl h-fit opacity-100 mx-5 mt-[2vh] relative md:w-[65%]">
             <FormMember closeModal={closeModal} onUploadMember={handleUploadMember} />
             <span className='text-2xl absolute top-4 right-5 text-primary cursor-pointer' onClick={(e) => setOpenModalAddMember(false)}>
               <Close fontSize='inherit' color='inherit' />

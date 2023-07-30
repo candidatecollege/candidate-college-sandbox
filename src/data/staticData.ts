@@ -59,8 +59,9 @@ export const articleMenus = [
 
 export const eventMenus = [
     { id: 0, name: 'Events', link: '/events' },
-    { id: 1, name: 'Categories', link: '/events/categories' },
-    { id: 2, name: 'Types', link: '/events/types' },
+    { id: 1, name: 'Matrix Events', link: '/events' },
+    { id: 2, name: 'Categories', link: '/events/categories' },
+    { id: 3, name: 'Types', link: '/events/types' },
 ]
 
 export const memberMenus = [
