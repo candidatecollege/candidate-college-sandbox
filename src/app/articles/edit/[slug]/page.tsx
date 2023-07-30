@@ -23,6 +23,12 @@ export default function Edit() {
   const router = useRouter()
   const storedToken = getToken()
 
+  useEffect(() => {
+    if (!storedToken) {
+      router.push('/auth');
+    }
+  }, [storedToken, router]);
+
   const fetchArticle = async () => {
     try {
         const response = await axios.get(`https://resource.candidatecollegeind.com/api/articles/${slug}`)
@@ -193,7 +199,7 @@ export default function Edit() {
   useEffect(() => {
     fetchCategories();
     fetchArticle();
-  }, [fetchArticle]);
+  }, []);
   
   useEffect(() => {
     // Only set the state values if the article data is available

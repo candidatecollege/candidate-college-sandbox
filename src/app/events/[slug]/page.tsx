@@ -6,8 +6,9 @@ import Link from 'next/link'
 import { eventMenus } from '@/data/staticData';
 import { Add, Diversity1 } from '@mui/icons-material'
 import axios from 'axios'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { formatDate } from '@/utils/time'
+import { getToken } from '@/utils/token'
 
 export default function Home() {
   const slug = usePathname().slice(8)
@@ -27,6 +28,15 @@ export default function Home() {
       setIsLoading(false)
     }
   }
+
+  const storedToken = getToken()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!storedToken) {
+      router.push('/auth');
+    }
+  }, [storedToken, router]);
 
   useEffect(() => {
     fetchEvent()

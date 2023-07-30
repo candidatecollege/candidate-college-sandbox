@@ -1,13 +1,23 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Main, Sidebar } from '@/components'
 import Link from 'next/link'
 import { eventMenus } from '@/data/staticData';
 import { ArrowBackIos } from '@mui/icons-material'
 import { FormEvent } from '../components';
+import { getToken } from '@/utils/token';
+import { useRouter } from 'next/navigation';
 
 export default function Create() {
   const [activeMenu, setActiveMenu] = useState<string>('Create Article')
+  const storedToken = getToken()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!storedToken) {
+      router.push('/auth');
+    }
+  }, [storedToken, router]);
 
   return (
     <main className="flex w-full h-screen shadow-lg rounded-3xl bg-white text-primary">
