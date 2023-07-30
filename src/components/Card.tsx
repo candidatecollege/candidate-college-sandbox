@@ -52,7 +52,7 @@ const Card: React.FC<any> = ({ data, isLoading, onDelete, type }) => {
                 </div>
 
                 <div className="md:flex flex-col gap hidden text-left">
-                    <Link href={`/datas/${data.slug}`} about={data.title} title={data.title}  className="font-semibold text-2xl text-primary">
+                    <Link href={`/${type == 'Article' ? 'articles' : 'events'}/${data.slug}`} about={data.title} title={data.title}  className="font-semibold text-2xl text-primary">
                       {
                         type == 'Article' ? data.title : data.name
                       }

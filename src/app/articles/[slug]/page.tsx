@@ -94,7 +94,7 @@ export default function Home() {
 
                 <div className="flex flex-col md:flex-row md:items-center md:justify-center md:w-full pt-2 gap-4">
                     <p className='text-sm text-primary'>
-                    {article && article.duration} Min Read  &nbsp; | &nbsp; {formatDate(article && article.created_at)} | {article && article.category}
+                    {article && article.duration} Min Read  &nbsp; | &nbsp; {formatDate(article && article.created_at)} &nbsp; | &nbsp; {article && article.category}
                     </p>
                 </div>
             </div>
