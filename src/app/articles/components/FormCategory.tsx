@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Input } from '@/components'
-import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { getToken } from '@/utils/token';
 
-const FormCategory = () => {
-  const router    = useRouter()
+const FormCategory: React.FC<any> = ({ onClose, isEdit, category }) => {
+  const storedToken = getToken()
 
-  const [name, setName] = useState<string>('')
+  const [name, setName] = useState<string>(isEdit ? category.category.name : '')
 
   const onChangeName = (e: any) => { setName(e.target.value) }
 
@@ -20,7 +20,7 @@ const FormCategory = () => {
     try {
         const response = await axios.post('https://resource.candidatecollegeind.com/api/article/categories', formData, {
             headers: {
-                Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Jlc291cmNlLmNhbmRpZGF0ZWNvbGxlZ2VpbmQuY29tL2FwaS9sb2dpbiIsImlhdCI6MTY4OTY5NDcwNiwiZXhwIjoxNjg5Njk4MzA2LCJuYmYiOjE2ODk2OTQ3MDYsImp0aSI6Ilo1VU50M3h3Z25ad3BQaW0iLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.tXuegI1dEgU7oPvSw52dBjxtFRelNOBCuy4yxbTOMI0`,
+                Authorization: `Bearer ${storedToken}`,
                 'Content-Type': 'mulipart/form-data',
             },
         })
@@ -33,10 +33,9 @@ const FormCategory = () => {
                 timer: 4000,
                 timerProgressBar: true,
                 icon: 'success',
-                title: 'Successfully uploaded your new article!',
+                title: 'Successfully uploaded your new category!',
             });
-
-            router.push('/articles/categories')
+            onClose()
         } else {
             Swal.fire({
                 toast: true,
@@ -55,13 +54,60 @@ const FormCategory = () => {
     setName('')
   }
 
+  const handleEditCategory = async (e: any) => {
+    e.preventDefault()
+
+    const formData = new FormData()
+    formData.append('name', name)
+
+    try {
+        const response = await axios.post(`https://resource.candidatecollegeind.com/api/article/categories/${category.category.id}`, formData, {
+            headers: {
+                Authorization: `Bearer ${storedToken}`,
+                'Content-Type': 'mulipart/form-data',
+            },
+        })
+        console.log(response)
+        if (response.data.status == 200) {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                icon: 'success',
+                title: 'Successfully updated your category!',
+            });
+            onClose()
+        } else {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                icon: 'error',
+                title: 'Failed to updated your category, Unauthorized!',
+            });
+        }
+    } catch (error) {
+        console.error('Error posting data: ', error)
+    }
+
+    setName('')
+  }
+
   return (
-    <form method="POST" encType='multipart/form-data' onSubmit={handleUploadCategory} className='flex flex-col gap-3 mt-5 w-full px-20 py-10'>
+    <form method="POST" encType='multipart/form-data' onSubmit={isEdit ? handleEditCategory : handleUploadCategory} className='flex flex-col gap-3 mt-5 w-full px-20 py-10'>
         <h1 className="font-semibold text-primary text-3xl md:text-[30px] md:w-[90%] md:leading-[90%] leading-[150%]">
-            Add Category
+            {
+                isEdit ? 'Edit' : 'Add'
+            } Category
         </h1>
         <p className="text-tersier text-sm lg:text-base md:w-[65%]">
-            Adding new category for your articles
+            {
+                isEdit ? 'Edit category for your articles' : 'Adding new category for your articles'
+            }
         </p>
 
         <Input 
@@ -74,7 +120,7 @@ const FormCategory = () => {
             width='full'
         />
 
-        <button about="Submit" title="Submit" type='submit' className={`bg-secondary text-primary font-medium text-sm md:text-base rounded-full px-2 md:px-5 py-3 text-center cursor-pointer mt-6 hover:bg-primary hover:text-white md:mt-0 w-full duration-700 transition-all`}>Upload</button>
+        <button about="Submit" title="Submit" type='submit' className={`bg-secondary text-primary font-medium text-sm md:text-base rounded-full px-2 md:px-5 py-3 text-center cursor-pointer mt-6 hover:bg-primary hover:text-white md:mt-0 w-full duration-700 transition-all`}>{isEdit ? 'Edit' : 'Upload'}</button>
     </form>
   )
 }

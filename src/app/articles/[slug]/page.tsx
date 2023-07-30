@@ -108,7 +108,7 @@ export default function Home() {
                 className='w-full h-[25vh] md:h-full my-6 rounded-xl object-cover'
             />
 
-            <div className="text-primary text-base md:text-left w-full prose prose-rich-text" dangerouslySetInnerHTML={{ __html: article && article.body }} />
+            <div className="text-primary text-lg md:text-left w-full prose prose-rich-text" dangerouslySetInnerHTML={{ __html: article && article.body }} />
 
           </section>
         }
