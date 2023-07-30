@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Input } from '@/components'
 import { Editor } from '@tinymce/tinymce-react'
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import Swal from 'sweetalert2'
 import '../../../styles/styles.css'
 import { useRouter } from 'next/navigation';
@@ -70,7 +70,7 @@ const FormArticle: React.FC<any> = ({ categories }) => {
         router.push('/articles')
     } catch (error) {
         console.error('Error posting data: ', error)
-        if (error.response.status === 401) {
+        if (isAxiosError(error) && error.response && error.response.status === 401) {
           Swal.fire({
             toast: true,
             position: 'top-end',

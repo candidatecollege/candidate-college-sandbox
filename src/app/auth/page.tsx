@@ -2,7 +2,7 @@
 import { Input } from '@/components'
 import Loader from '@/components/Loader'
 import { getToken, setTokenWithExpiration } from '@/utils/token'
-import axios from 'axios'
+import axios, { isAxiosError } from 'axios'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
@@ -52,7 +52,7 @@ const Auth: React.FC<any> = ({ type }) => {
       router.push('/')
     } catch (error) {
       setIsLoading(false)
-      if (error.response.status === 401) {
+      if (isAxiosError(error) && error.response && error.response.status === 401) {
         Swal.fire({
           toast: true,
           position: 'top-end',

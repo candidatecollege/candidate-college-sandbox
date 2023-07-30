@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { articleMenus } from '@/data/staticData';
 import { FormArticle } from '../../components'
 import { ArrowBackIos } from '@mui/icons-material'
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import { usePathname } from 'next/navigation'
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
@@ -126,7 +126,7 @@ export default function Create() {
         router.push('/articles')
     } catch (error) {
         console.error('Error posting data: ', error)
-        if (error.response.status === 401) {
+        if (isAxiosError(error) && error.response && error.response.status === 401) {
           Swal.fire({
             toast: true,
             position: 'top-end',

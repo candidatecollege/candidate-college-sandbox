@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Input } from '@/components'
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import Swal from 'sweetalert2';
 import { getToken } from '@/utils/token';
 
@@ -68,30 +68,41 @@ const FormCategory: React.FC<any> = ({ onClose, isEdit, category }) => {
             },
         })
         console.log(response)
-        if (response.data.status == 200) {
-            Swal.fire({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 4000,
-                timerProgressBar: true,
-                icon: 'success',
-                title: 'Successfully updated your category!',
-            });
-            onClose()
-        } else {
-            Swal.fire({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                icon: 'error',
-                title: 'Failed to updated your category, Unauthorized!',
-            });
-        }
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            icon: 'success',
+            title: 'Successfully updated your category!',
+        });
+
+        onClose()
     } catch (error) {
         console.error('Error posting data: ', error)
+        if (isAxiosError(error) && error.response && error.response.status === 401) {
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              icon: 'error',
+              title: 'Failed to edit article, unauthenticated!',
+            })
+          } else {
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              icon: 'error',
+              title: 'Internal server error, please edit it later!',
+            })
+          }
+          onClose()
     }
 
     setName('')

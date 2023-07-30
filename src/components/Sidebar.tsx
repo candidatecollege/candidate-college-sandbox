@@ -7,7 +7,7 @@ import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import InsightsOutlinedIcon from '@mui/icons-material/InsightsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import Link from 'next/link';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 
@@ -50,7 +50,7 @@ const Sidebar: React.FC<any> = ({ active }) => {
       console.log(response)
     } catch (error) {
       console.error(error)
-      if (error.response.status === 401) {
+      if (isAxiosError(error) && error.response && error.response.status === 401) {
         Swal.fire({
           toast: true,
           position: 'top-end',
