@@ -24,7 +24,7 @@ export default function Home() {
     setIsLoading(true)
 
     try {
-      const response = await axios.get('https://resource.candidatecollegeind.com/api/events');
+      const response = await axios.get('http://resource-candidatecollege.infinityfreeapp.com/api/events');
 
       setTimeout(() => {
         setEvents(response.data.data)

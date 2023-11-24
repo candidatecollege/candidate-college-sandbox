@@ -36,7 +36,7 @@ const Categories = () => {
     setIsLoading(true)
 
     try {
-      const response = await axios.get('https://resource.candidatecollegeind.com/api/event/categories');
+      const response = await axios.get('http://resource-candidatecollege.infinityfreeapp.com/api/event/categories');
 
       setCategories(response.data.data)
       setIsLoading(false)
