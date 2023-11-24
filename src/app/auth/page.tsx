@@ -33,7 +33,7 @@ const Auth: React.FC<any> = ({ type }) => {
     formData.append('password', password)
 
     try {
-      const response = await axios.post('http://resource-candidatecollege.infinityfreeapp.com/api/login', formData)
+      const response = await axios.post('https://resource-candidatecollege.infinityfreeapp.com/api/login', formData)
 
       setIsLoading(false)
 
