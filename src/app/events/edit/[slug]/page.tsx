@@ -32,7 +32,7 @@ export default function Edit() {
 
   const fetchEvent = async () => {
     try {
-        const response = await axios.get(`http://resource-candidatecollege.infinityfreeapp.com/api/events/${slug}`)
+        const response = await axios.get(`/api/events/${slug}`)
 
         setEvent(response.data.data)
         console.log(response)

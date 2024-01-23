@@ -29,7 +29,7 @@ const Sidebar: React.FC<any> = ({ active }) => {
     e.preventDefault()
 
     try {
-      const response = await axios.post('https://resource.candidatecollegeind.com/api/logout', null, {
+      const response = await axios.post('/api/logout', null, {
         headers: {
           Authorization: `Bearer ${getToken()}`
         }

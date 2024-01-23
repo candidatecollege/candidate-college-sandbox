@@ -18,7 +18,7 @@ const FormType: React.FC<any> = ({ onClose, isEdit, category }) => {
     formData.append('name', name)
 
     try {
-        const response = await axios.post('https://resource.candidatecollegeind.com/api/event/types', formData, {
+        const response = await axios.post('/api/event/types', formData, {
             headers: {
                 Authorization: `Bearer ${storedToken}`,
                 'Content-Type': 'mulipart/form-data',
@@ -71,7 +71,7 @@ const FormType: React.FC<any> = ({ onClose, isEdit, category }) => {
     formData.append('name', name)
 
     try {
-        const response = await axios.post(`https://resource.candidatecollegeind.com/api/event/types/${category.category.id}`, formData, {
+        const response = await axios.post(`/api/event/types/${category.category.id}`, formData, {
             headers: {
                 Authorization: `Bearer ${storedToken}`,
                 'Content-Type': 'mulipart/form-data',

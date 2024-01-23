@@ -31,9 +31,7 @@ export default function Edit() {
 
   const fetchArticle = async () => {
     try {
-      const response = await axios.get(
-        `http://resource-candidatecollege.infinityfreeapp.com/api/articles/${slug}`
-      );
+      const response = await axios.get(`/api/articles/${slug}`);
 
       setArticle(response.data.data);
       console.log(response);
@@ -130,7 +128,7 @@ export default function Edit() {
 
     try {
       const response = await axios.post(
-        `http://resource-candidatecollege.infinityfreeapp.com/api/articles/${slug}`,
+        `/api/articles/${slug}`,
         formData,
         {
           headers: {
@@ -200,7 +198,7 @@ export default function Edit() {
     try {
       // Replace 'YOUR_IMAGE_UPLOAD_API_URL' with your API endpoint for image uploads
       const response = await axios.post(
-        "http://resource-candidatecollege.infinityfreeapp.com/api/articles/image/upload",
+        "/api/articles/image/upload",
         formData,
         {
           headers: {
@@ -222,7 +220,7 @@ export default function Edit() {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "http://resource-candidatecollege.infinityfreeapp.com/api/article/categories"
+        "/api/article/categories"
       );
 
       setCategories(response.data.data);
@@ -466,7 +464,7 @@ export default function Edit() {
                 "image code",
               ],
               images_upload_url:
-                "http://resource-candidatecollege.infinityfreeapp.com/api/articles/image/upload",
+                "/api/articles/image/upload",
               file_picker_types: "image",
               file_picker_callback: handleImageUpload,
               automatic_uploads: true,

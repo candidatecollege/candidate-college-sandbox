@@ -19,7 +19,7 @@ export default function Home() {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://resource-candidatecollege.infinityfreeapp.com/api/articles/${slug}`
+        `/api/articles/${slug}`
       );
 
       setArticle(response.data.data);

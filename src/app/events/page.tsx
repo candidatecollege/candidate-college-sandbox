@@ -24,7 +24,7 @@ export default function Home() {
     setIsLoading(true)
 
     try {
-      const response = await axios.get('http://resource-candidatecollege.infinityfreeapp.com/api/events');
+      const response = await axios.get('/api/events');
 
       setTimeout(() => {
         setEvents(response.data.data)
@@ -51,7 +51,7 @@ export default function Home() {
     }).then(async (result: any) => {
         if (result.isConfirmed) {
             try {
-                const response = await axios.delete(`https://resource.candidatecollegeind.com/api/events/${slug}`, {
+                const response = await axios.delete(`/api/events/${slug}`, {
                     headers: {
                         Authorization: `Bearer ${storedToken}`,
                     },

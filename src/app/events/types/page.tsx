@@ -36,7 +36,7 @@ const Types = () => {
     setIsLoading(true)
 
     try {
-      const response = await axios.get('http://resource-candidatecollege.infinityfreeapp.com/api/event/types');
+      const response = await axios.get('/api/event/types');
 
       setTypes(response.data.data)
       setIsLoading(false)

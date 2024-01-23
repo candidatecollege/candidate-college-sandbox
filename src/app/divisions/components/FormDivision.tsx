@@ -21,7 +21,7 @@ const FormDivision: React.FC<any> = ({ closeModal }) => {
       formData.append('active', active)
 
       try {
-        const response = await axios.post('https://resource.candidatecollegeind.com/api/divisions', formData, {
+        const response = await axios.post('/api/divisions', formData, {
             headers: {
                 Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Jlc291cmNlLmNhbmRpZGF0ZWNvbGxlZ2VpbmQuY29tL2FwaS9sb2dpbiIsImlhdCI6MTY4OTcyOTA5MiwiZXhwIjoxNjg5NzMyNjkyLCJuYmYiOjE2ODk3MjkwOTIsImp0aSI6ImZ1WFdDQXlYeGM4SkVLTWkiLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.-TpSU2Pou6CbroB9h0IJ5gU71d19Kgln-_fD9a2vzWk`,
                 'Content-Type': 'mulipart/form-data',

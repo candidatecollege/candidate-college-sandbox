@@ -38,9 +38,7 @@ const Categories = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.get(
-        "http://resource-candidatecollege.infinityfreeapp.com/api/article/categories"
-      );
+      const response = await axios.get("/api/article/categories");
 
       setCategories(response.data.data);
       setIsLoading(false);
@@ -66,7 +64,7 @@ const Categories = () => {
       if (result.isConfirmed) {
         try {
           const response = await axios.delete(
-            `http://resource-candidatecollege.infinityfreeapp.com/api/article/categories/${id}`,
+            `/api/article/categories/${id}`,
             {
               headers: {
                 Authorization: `Bearer ${storedToken}`,
