@@ -61,7 +61,7 @@ const Categories = () => {
     }).then(async (result: any) => {
         if (result.isConfirmed) {
             try {
-                const response = await axios.delete(`https://resource.candidatecollegeind.com/api/event/categories/${id}`, {
+                const response = await axios.delete(`/api/event/categories/${id}`, {
                     headers: {
                         Authorization: `Bearer ${storedToken}`,
                     },

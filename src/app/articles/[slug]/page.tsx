@@ -116,7 +116,7 @@ export default function Home() {
           </div>
 
           <Image
-            src={`http://resource-candidatecollege.infinityfreeapp.com/storage/${
+            src={`/uploads/${
               article && article.cover_landscape
             }`}
             alt={article && article.title}

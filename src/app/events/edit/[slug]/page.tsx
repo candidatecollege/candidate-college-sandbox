@@ -131,7 +131,7 @@ export default function Edit() {
     formData.append('end_date_time', endDateTime)
 
     try {
-        const response = await axios.post(`https://resource.candidatecollegeind.com/api/events/${slug}`, formData, {
+        const response = await axios.post(`/api/events/${slug}`, formData, {
             headers: {
                 Authorization: `Bearer ${storedToken}`,
                 'Content-Type': 'mulipart/form-data',
@@ -198,7 +198,7 @@ export default function Edit() {
 
     try {
       // Replace 'YOUR_IMAGE_UPLOAD_API_URL' with your API endpoint for image uploads
-      const response = await axios.post('https://resource.candidatecollegeind.com/api/articles/image/upload', formData, {
+      const response = await axios.post('/api/articles/image/upload', formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'multipart/form-data',
@@ -216,7 +216,7 @@ export default function Edit() {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('https://resource.candidatecollegeind.com/api/event/categories');
+      const response = await axios.get('/api/event/categories');
 
       setCategories(response.data.data)
       console.log(response)
@@ -227,7 +227,7 @@ export default function Edit() {
 
   const fetchTypes = async () => {
     try {
-      const response = await axios.get('https://resource.candidatecollegeind.com/api/event/types');
+      const response = await axios.get('/api/event/types');
 
       setTypes(response.data.data)
       console.log(response)
@@ -353,7 +353,7 @@ export default function Edit() {
                 height={0}
                 alt={name}
                 title={name}
-                src={`https://resource.candidatecollegeind.com/storage/${oldCover}`}className={'w-[339px] h-[320px] rounded-xl object-cover'}
+                src={`/uploads/${oldCover}`}className={'w-[339px] h-[320px] rounded-xl object-cover'}
             />
           </div>
           {
@@ -382,7 +382,7 @@ export default function Edit() {
                 height={0}
                 alt={name}
                 title={name}
-                src={`https://resource.candidatecollegeind.com/storage/${oldCoverLandscape}`}className={'w-full h-[340px] rounded-xl object-cover'}
+                src={`/uploads/${oldCoverLandscape}`}className={'w-full h-[340px] rounded-xl object-cover'}
             />
           </div>
           {
@@ -432,7 +432,7 @@ export default function Edit() {
                     'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
                     'insertdatetime', 'media', 'table', 'help', 'wordcount', 'image code'
                     ],
-                    images_upload_url: 'https://resource.candidatecollegeind.com/api/articles/image/upload',
+                    images_upload_url: '/api/articles/image/upload',
                     file_picker_types: 'image',
                     automatic_uploads: true,
                     toolbar1: 'undo redo | blocks | ' +

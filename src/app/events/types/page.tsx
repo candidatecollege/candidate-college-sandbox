@@ -61,7 +61,7 @@ const Types = () => {
     }).then(async (result: any) => {
         if (result.isConfirmed) {
             try {
-                const response = await axios.delete(`https://resource.candidatecollegeind.com/api/event/types/${id}`, {
+                const response = await axios.delete(`/api/event/types/${id}`, {
                     headers: {
                         Authorization: `Bearer ${storedToken}`,
                     },

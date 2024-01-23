@@ -378,7 +378,7 @@ export default function Edit() {
                 height={0}
                 alt={title}
                 title={title}
-                src={`http://resource-candidatecollege.infinityfreeapp.com/storage/${oldCover}`}
+                src={`/uploads/${oldCover}`}
                 className={"w-[339px] h-[320px] rounded-xl object-cover"}
               />
             </div>
@@ -415,7 +415,7 @@ export default function Edit() {
                 height={0}
                 alt={title}
                 title={title}
-                src={`http://resource-candidatecollege.infinityfreeapp.com/storage/${oldCoverLandscape}`}
+                src={`/uploads/${oldCoverLandscape}`}
                 className={"w-full h-[340px] rounded-xl object-cover"}
               />
             </div>

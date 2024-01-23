@@ -8,8 +8,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        destination: 'https://cors-proxy-infinityfree.vercel.app/api/:path*',
+        source: '/:slug(api|uploads)/:path*',
+        destination: 'https://cors-proxy-infinityfree.vercel.app/:slug/:path*',
       },
     ];
   },

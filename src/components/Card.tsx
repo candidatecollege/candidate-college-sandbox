@@ -43,7 +43,7 @@ const Card: React.FC<any> = ({ data, isLoading, onDelete, type }) => {
                     <Image 
                         width={100}
                         height={50}
-                        src={`https://resource.candidatecollegeind.com/storage/${data.cover_landscape}`}
+                        src={`/uploads/${data.cover_landscape}`}
                         alt={data.title}
                         title={data.title}
                         className='w-full h-full md:w-full md:h-[178px] rounded-xl object-cover'
