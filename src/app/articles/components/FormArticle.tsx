@@ -49,7 +49,7 @@ const FormArticle: React.FC<any> = ({ categories }) => {
     formData.append('body', body)
 
     try {
-        const response = await axios.post('https://resource.candidatecollegeind.com/api/articles', formData, {
+        const response = await axios.post('/api/articles', formData, {
             headers: {
                 Authorization: `Bearer ${storedToken}`,
                 'Content-Type': 'multipart/form-data',
@@ -111,7 +111,7 @@ const FormArticle: React.FC<any> = ({ categories }) => {
 
     try {
       // Replace 'YOUR_IMAGE_UPLOAD_API_URL' with your API endpoint for image uploads
-      const response = await axios.post('https://resource.candidatecollegeind.com/api/articles/image/upload', formData, {
+      const response = await axios.post('/api/articles/image/upload', formData, {
         headers: {
           Authorization: `Bearer ${storedToken}`,
           'Content-Type': 'multipart/form-data',
@@ -225,7 +225,7 @@ const FormArticle: React.FC<any> = ({ categories }) => {
                   'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
                   'insertdatetime', 'media', 'table', 'help', 'wordcount', 'image code'
                 ],
-                images_upload_url: 'https://resource.candidatecollegeind.com/api/articles/image/upload',
+                images_upload_url: '/api/articles/image/upload',
                 file_picker_types: 'image',
                 file_picker_callback: handleImageUpload,
                 automatic_uploads: true,

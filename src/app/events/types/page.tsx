@@ -36,7 +36,7 @@ const Types = () => {
     setIsLoading(true)
 
     try {
-      const response = await axios.get('http://resource-candidatecollege.infinityfreeapp.com/api/event/types');
+      const response = await axios.get('/api/event/types');
 
       setTypes(response.data.data)
       setIsLoading(false)
@@ -61,7 +61,7 @@ const Types = () => {
     }).then(async (result: any) => {
         if (result.isConfirmed) {
             try {
-                const response = await axios.delete(`https://resource.candidatecollegeind.com/api/event/types/${id}`, {
+                const response = await axios.delete(`/api/event/types/${id}`, {
                     headers: {
                         Authorization: `Bearer ${storedToken}`,
                     },

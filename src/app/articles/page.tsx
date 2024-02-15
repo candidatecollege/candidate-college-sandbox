@@ -25,9 +25,7 @@ export default function Home() {
     setIsLoading(true);
 
     try {
-      const response = await axios.get(
-        "http://resource-candidatecollege.infinityfreeapp.com/api/articles?count=100"
-      );
+      const response = await axios.get("/api/articles?count=100");
 
       setTimeout(() => {
         setArticles(response.data.data);
@@ -54,7 +52,8 @@ export default function Home() {
       if (result.isConfirmed) {
         try {
           const response = await axios.delete(
-            `http://resource-candidatecollege.infinityfreeapp.com/api/articles/${slug}`,
+            // `http://resource-candidatecollege.infinityfreeapp.com/api/articles/${slug}`,
+            `/api/articles/${slug}`,
             {
               headers: {
                 Authorization: `Bearer ${storedToken}`,

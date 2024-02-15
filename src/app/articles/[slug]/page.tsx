@@ -19,7 +19,7 @@ export default function Home() {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://resource-candidatecollege.infinityfreeapp.com/api/articles/${slug}`
+        `/api/articles/${slug}`
       );
 
       setArticle(response.data.data);
@@ -116,7 +116,7 @@ export default function Home() {
           </div>
 
           <Image
-            src={`http://resource-candidatecollege.infinityfreeapp.com/storage/${
+            src={`/uploads/${
               article && article.cover_landscape
             }`}
             alt={article && article.title}

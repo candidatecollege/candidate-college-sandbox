@@ -60,7 +60,7 @@ const FormEvent = () => {
     formData.append('end_date_time', endDateTime)
 
     try {
-        const response = await axios.post('https://resource.candidatecollegeind.com/api/events', formData, {
+        const response = await axios.post('/api/events', formData, {
             headers: {
                 Authorization: `Bearer ${storedToken}`,
                 'Content-Type': 'multipart/form-data'
@@ -245,7 +245,7 @@ const FormEvent = () => {
                   'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
                   'insertdatetime', 'media', 'table', 'help', 'wordcount', 'image code'
                 ],
-                images_upload_url: 'https://resource.candidatecollegeind.com/api/articles/image/upload',
+                images_upload_url: '/api/articles/image/upload',
                 file_picker_types: 'image',
                 automatic_uploads: true,
                 toolbar1: 'undo redo | blocks | ' +

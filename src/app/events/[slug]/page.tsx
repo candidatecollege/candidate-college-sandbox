@@ -18,7 +18,7 @@ export default function Home() {
   const fetchEvent = async () => {
     setIsLoading(true)
     try {
-      const response = await axios.get(`http://resource-candidatecollege.infinityfreeapp.com/api/events/${slug}`);
+      const response = await axios.get(`/api/events/${slug}`);
 
       setEvent(response.data.data)
       setIsLoading(false)
@@ -110,7 +110,7 @@ export default function Home() {
             </div>
 
             <Image 
-                src={`https://resource.candidatecollegeind.com/storage/${event && event.cover_landscape}`}
+                src={`/uploads/${event && event.cover_landscape}`}
                 alt={event && event.title}
                 title={event && event.title}
                 width={100}

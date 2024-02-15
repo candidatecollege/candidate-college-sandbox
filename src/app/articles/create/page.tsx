@@ -18,9 +18,7 @@ export default function Create() {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(
-        "http://resource-candidatecollege.infinityfreeapp.com/api/article/categories"
-      );
+      const response = await axios.get("/api/article/categories");
 
       setCategories(response.data.data);
       console.log(response);

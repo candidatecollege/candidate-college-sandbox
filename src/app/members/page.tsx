@@ -33,7 +33,7 @@ export default function Home() {
 
   const fetchMembers = async () => {
     try { 
-      const response = await axios.get('https://resource.candidatecollegeind.com/api/members')
+      const response = await axios.get('/api/members')
       setMembers(response.data.data)
       console.log(response)
     } catch (error) {
@@ -43,7 +43,7 @@ export default function Home() {
 
   const handleUploadMember = async (data: any) => {
     try {
-      const response = await axios.post('https://resource.candidatecollegeind.com/api/members', data, {
+      const response = await axios.post('/api/members', data, {
           headers: {
             Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Jlc291cmNlLmNhbmRpZGF0ZWNvbGxlZ2VpbmQuY29tL2FwaS9sb2dpbiIsImlhdCI6MTY4OTczMjc5MSwiZXhwIjoxNjg5NzM2MzkxLCJuYmYiOjE2ODk3MzI3OTEsImp0aSI6IlJabjZuVkNzYjNGNmpCczgiLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.4rP2nkB-I-AHzuzicv6YUkeyTdAQDzHOeoqV_2ZdjUw`,
             'Content-Type': 'mulipart/form-data',
@@ -63,7 +63,7 @@ export default function Home() {
 
   const handleDeleteMember = async (id: number) => {
     try {
-      const response = await axios.delete(`https://resource.candidatecollegeind.com/api/members/${id}`, {
+      const response = await axios.delete(`/api/members/${id}`, {
         headers: {
           Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Jlc291cmNlLmNhbmRpZGF0ZWNvbGxlZ2VpbmQuY29tL2FwaS9sb2dpbiIsImlhdCI6MTY4OTczMjc5MSwiZXhwIjoxNjg5NzM2MzkxLCJuYmYiOjE2ODk3MzI3OTEsImp0aSI6IlJabjZuVkNzYjNGNmpCczgiLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.4rP2nkB-I-AHzuzicv6YUkeyTdAQDzHOeoqV_2ZdjUw`
         }

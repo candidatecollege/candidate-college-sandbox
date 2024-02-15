@@ -7,7 +7,7 @@ const FormMember: React.FC<any> = ({ closeModal, onUploadMember }) => {
 
     const fetchDivisions = async () => {
       try {
-        const response = await axios.get('https://resource.candidatecollegeind.com/api/divisions')
+        const response = await axios.get('/api/divisions')
         setDivisions(response.data.data)
         console.log(response)
       } catch (error) {
