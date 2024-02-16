@@ -54,6 +54,7 @@ export default function Home() {
           const response = await axios.post(
             // `http://resource-candidatecollege.infinityfreeapp.com/api/articles/${slug}`,
             `/api/articles/${slug}/delete`,
+            {},
             {
               headers: {
                 Authorization: `Bearer ${storedToken}`,
