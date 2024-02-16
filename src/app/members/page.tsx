@@ -63,7 +63,7 @@ export default function Home() {
 
   const handleDeleteMember = async (id: number) => {
     try {
-      const response = await axios.delete(`/api/members/${id}`, {
+      const response = await axios.post(`/api/members/${id}/delete`, {
         headers: {
           Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Jlc291cmNlLmNhbmRpZGF0ZWNvbGxlZ2VpbmQuY29tL2FwaS9sb2dpbiIsImlhdCI6MTY4OTczMjc5MSwiZXhwIjoxNjg5NzM2MzkxLCJuYmYiOjE2ODk3MzI3OTEsImp0aSI6IlJabjZuVkNzYjNGNmpCczgiLCJzdWIiOiIzIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.4rP2nkB-I-AHzuzicv6YUkeyTdAQDzHOeoqV_2ZdjUw`
         }
