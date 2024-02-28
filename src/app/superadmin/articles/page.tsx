@@ -127,11 +127,22 @@ export default function PageArticlesSuperAdmin() {
         <section
           className={`${border.border_graph} pb-16 relative  w-1/2 rounded-[10px]  p-4 bg-[#0000008F]`}
         >
-          <div>
-            <h2 className="text-[20px] font-semibold leading-[26px]">
-              Statistics last 7 days
-            </h2>
-            <h3 className="text-[16px] text-[#FFFFFF8F]">Document</h3>
+          <div className="flex items-center relative justify-between">
+            <div>
+              <h2 className="text-[20px] font-semibold leading-[26px]">
+                Statistics last
+              </h2>
+              <h3 className="text-[16px] text-[#FFFFFF8F]">Document</h3>
+            </div>
+            <select
+              className="bg-secondary  p-[6px] rounded-[10px]  font-medium text-[15px] text-primary"
+              name=""
+              id=""
+            >
+              <option value="3">3 days</option>
+              <option value="3">7 days</option>
+              <option value="all">All days</option>
+            </select>
           </div>
           <Bar
             options={{ maintainAspectRatio: false, responsive: true }}
