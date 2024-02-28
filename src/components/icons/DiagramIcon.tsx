@@ -1,0 +1,28 @@
+export default function DiagramIcon() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 30 30"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M2.5 2.5V23.75C2.5 25.825 4.175 27.5 6.25 27.5H27.5"
+        stroke="white"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M6.25 21.25L11.9875 14.55C12.9375 13.45 14.625 13.375 15.65 14.4125L16.8375 15.6C17.8625 16.625 19.55 16.5625 20.5 15.4625L26.25 8.75"
+        stroke="white"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}

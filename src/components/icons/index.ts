@@ -7,6 +7,12 @@ import ArticleIcon from "./ArticleIcon";
 import StickNoteIcon from "./StickyNoteIcon";
 import BriefcaseIcon from "./BriefcaseIcon";
 import PeopleIcon from "./PeopleIcon";
+import DiagramIcon from "./DiagramIcon";
+import BookmarkIcon from "./BookmarkIcon";
+import EditIcon from "./EditIcon";
+import CalendarIcon from "./CalendarIcon";
+import ClockIcon from "./ClockIcon";
+import Trash2Icon from "./Trash2Icon";
 
 export {
   TrashIcon,
@@ -18,4 +24,10 @@ export {
   StickNoteIcon,
   BriefcaseIcon,
   PeopleIcon,
+  DiagramIcon,
+  BookmarkIcon,
+  EditIcon,
+  CalendarIcon,
+  ClockIcon,
+  Trash2Icon,
 };
