@@ -13,9 +13,9 @@ import {
   PluginChartOptions,
   Plugin,
 } from "chart.js";
-import { Bar, Doughnut } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import border from "@/styles/border.module.css";
-import { GoGraph } from "react-icons/go";
+
 import {
   BookmarkIcon,
   CalendarIcon,

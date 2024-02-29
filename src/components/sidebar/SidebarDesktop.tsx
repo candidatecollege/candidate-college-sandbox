@@ -7,13 +7,14 @@ import styles from "@/styles/border.module.css";
 import iconStyles from "@/styles/icon.module.css";
 import useActive from "@/hooks/useActive";
 import Separator from "./Separator";
+import Link from "next/link";
 
 export default function SidebarDesktop({
   navLink,
   pathname,
 }: {
   navLink: any;
-  pathname: any;
+  pathname: string;
 }) {
   const { isActive } = useActive();
   return (
@@ -55,14 +56,17 @@ export default function SidebarDesktop({
         <ul className="flex mt-2 relative flex-col">
           {navLink.map(({ title, path, icon }: any, index: number) => {
             return (
-              <li
+              <Link
                 key={index}
+                href={path}
                 className={`${styles.border_link} ${
-                  pathname.startsWith(path) && styles.border_link_active
+                  path == "/superadmin"
+                    ? pathname == path && styles.border_link_active
+                    : pathname.startsWith(path) && styles.border_link_active
                 } rounded-[10px]  px-5 py-3 flex gap-4 items-center text-[#FFFFFF8F] text-[14px]`}
               >
                 {icon} {title}
-              </li>
+              </Link>
             );
           })}
         </ul>

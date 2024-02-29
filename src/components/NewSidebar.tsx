@@ -26,7 +26,7 @@ export default function NewSidebar() {
   const navLink = [
     {
       title: "Dashboard",
-      path: "/superadmin/dashboard",
+      path: "/superadmin",
       icon: <DashboardIcon />,
     },
     { title: "Article", path: "/superadmin/articles", icon: <ArticleIcon /> },

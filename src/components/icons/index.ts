@@ -13,6 +13,7 @@ import EditIcon from "./EditIcon";
 import CalendarIcon from "./CalendarIcon";
 import ClockIcon from "./ClockIcon";
 import Trash2Icon from "./Trash2Icon";
+import BookIcon from "./BookIcon";
 
 export {
   TrashIcon,
@@ -30,4 +31,5 @@ export {
   CalendarIcon,
   ClockIcon,
   Trash2Icon,
+  BookIcon,
 };

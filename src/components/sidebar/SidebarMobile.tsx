@@ -8,6 +8,7 @@ import styles from "@/styles/border.module.css";
 import iconStyles from "@/styles/icon.module.css";
 import useActive from "@/hooks/useActive";
 import Separator from "./Separator";
+import Link from "next/link";
 
 export default function SidebarMobile({
   navLink,
@@ -51,14 +52,17 @@ export default function SidebarMobile({
         <ul className="flex mt-2 relative z- flex-col">
           {navLink.map(({ title, path, icon }: any, index: number) => {
             return (
-              <li
+              <Link
                 key={index}
+                href={path}
                 className={`${styles.border_link} ${
-                  pathname.startsWith(path) && styles.border_link_active
-                }   justify-center  rounded-[10px] px-3  py-3 flex gap-4 items-center text-[#FFFFFF8F] text-[14px]`}
+                  path == "/superadmin"
+                    ? pathname == path && styles.border_link_active
+                    : pathname.startsWith(path) && styles.border_link_active
+                } rounded-[10px]  px-5 py-3 flex gap-4 items-center text-[#FFFFFF8F] text-[14px]`}
               >
                 {icon}
-              </li>
+              </Link>
             );
           })}
         </ul>
