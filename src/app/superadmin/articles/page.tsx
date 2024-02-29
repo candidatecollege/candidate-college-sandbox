@@ -32,10 +32,18 @@ export default function PageArticlesSuperAdmin() {
   const [articles, setArticles] = useState([]);
   const [categoryArticles, setCategoryArticles] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const statisticValue = [
+    { value: "3", title: "3 days" },
+    { value: "7", title: "7 days" },
+    { value: "all", title: "all days" },
+  ];
+
   const fetchArticles = async () => {
     setIsLoading(true);
     try {
       const data = await axios.get("/api/articles?count=3");
+
       setArticles(data.data.data);
     } catch (err) {
       console.log(err);
@@ -135,15 +143,23 @@ export default function PageArticlesSuperAdmin() {
               <h3 className="text-[16px] text-[#FFFFFF8F]">Document</h3>
             </div>
             <select
-              className="bg-secondary  p-[6px] rounded-[10px]  font-medium text-[15px] text-primary"
+              className="bg-secondary    p-[6px] rounded-[10px]  font-medium text-[15px] text-primary"
               name=""
               id=""
             >
-              <option value="3">3 days</option>
-              <option value="3">7 days</option>
-              <option value="all">All days</option>
+              {statisticValue.map((value, index) => {
+                return (
+                  <option
+                    className={`hover:bg-primary  checked:bg-primary checked:text-white`}
+                    value={value.value}
+                  >
+                    {value.title}
+                  </option>
+                );
+              })}
             </select>
           </div>
+
           <Bar
             options={{ maintainAspectRatio: false, responsive: true }}
             className="absolute"
