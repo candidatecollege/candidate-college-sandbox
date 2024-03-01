@@ -211,7 +211,7 @@ export default function DashboardPage() {
           </section>
         </div>
         <div
-          className={`${border.border_graph}  flex-1GHHHGNJINOKKJMIIOJJNMM  NUHUH9UI0OM,JJJJ bg-[#0000008F] rounded-[10px]`}
+          className={`${border.border_graph}  flex-1 bg-[#0000008F] rounded-[10px]`}
         >
           <h2 className="text-[20px] p-4  font-semibold leading-[26px]">
             New Members
