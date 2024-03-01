@@ -48,6 +48,33 @@ export default function DashboardPage() {
     ],
   } as ChartData<"doughnut">;
 
+  const dataCard = [
+    {
+      title: "Published article",
+      icon: <BookIcon />,
+      percent: "15%",
+      count: 250,
+    },
+    {
+      title: "All events",
+      icon: <StickNoteIcon stroke="#1B4E6B" />,
+      percent: "40%",
+      count: 300,
+    },
+    {
+      title: "Total divisions",
+      icon: <BriefcaseIcon stroke="#1B4E6B" />,
+      percent: "33%",
+      count: 14,
+    },
+    {
+      title: "Total Members",
+      icon: <PeopleIcon stroke="#1B4E6B" />,
+      percent: "5%",
+      count: 130,
+    },
+  ];
+
   const dataBar = {
     labels: [
       "Sunday",
@@ -83,24 +110,24 @@ export default function DashboardPage() {
         placeholder="Search for anything"
       />
       <div className="flex flex-wrap gap-6 h-fit mt-4">
-        {new Array(4).fill(0).map((_, index) => {
+        {dataCard.map((value, index) => {
           return (
             <div
               key={index}
               className={`${border.border_graph} p-4 rounded-[10px] flex-1  bg-[#0000008F]`}
             >
               <div className="flex items-center justify-between">
-                <h2 className="text-[16px] font-medium">Published article</h2>
+                <h2 className="text-[16px] font-medium">{value.title}</h2>
                 <button className="bg-secondary rounded-[15px] p-[10px]">
-                  <BookIcon />
+                  {value.icon}
                 </button>
               </div>
-              <h3 className="text-[40px] font-semibold">250</h3>
-              <Progress />
+              <h3 className="text-[40px] font-semibold">{value.count}</h3>
+              <Progress percent={value.percent} />
               <div className="flex items-center mt-4 justify-between">
                 <h4 className="text-[8px]">+300 readers in 7 days</h4>
                 <button className="bg-[#5EACDD] text-[14px] rounded-[15px] px-2 text-white">
-                  15%
+                  {value.percent}
                 </button>
               </div>
             </div>
@@ -108,8 +135,8 @@ export default function DashboardPage() {
         })}
       </div>
 
-      <div className="mt-5 gap-5 flex">
-        <div className="w-full">
+      <div className="mt-5 gap-5 flex flex-wrap">
+        <div className="flex-1">
           <section
             className={`${border.border_graph} w-full pb-16 relative min-h-[300px]  rounded-[10px]  p-4 bg-[#0000008F]`}
           >
@@ -153,22 +180,22 @@ export default function DashboardPage() {
               </h2>
               <h3 className="text-[16px] text-[#FFFFFF8F]">Document</h3>
             </div>
-            <div className="flex">
-              <ul className="flex py-5 flex-1 px-8 flex-col gap-8">
+            <div className="flex py-5 px-8">
+              <ul className="flex  flex-1  flex-col gap-8">
                 <li className="flex gap-2 text-[14px] font-medium items-center">
-                  <div className="rounded-[5px] w-[14px] h-[14px] bg-[#5EACDD]" />
+                  <div className="rounded-[5px] w-[14px] !aspect-square h-[14px] bg-[#5EACDD]" />
                   Ongoing Events
                 </li>
                 <li className="flex gap-2 text-[14px] font-medium items-center">
-                  <div className="rounded-[5px] w-[14px] h-[14px] bg-secondary" />
+                  <div className="rounded-[5px] w-[14px] !aspect-square h-[14px] bg-secondary" />
                   Attended
                 </li>
                 <li className="flex gap-2 text-[14px] font-medium items-center">
-                  <div className="rounded-[5px] w-[14px] h-[14px] bg-primary" />
+                  <div className="rounded-[5px] w-[14px] !aspect-square h-[14px] bg-primary" />
                   Upcoming Events
                 </li>
               </ul>
-              <div className="flex-1 relative">
+              <div className="w-1/2 relative">
                 <Doughnut
                   options={{
                     plugins: {
@@ -184,7 +211,7 @@ export default function DashboardPage() {
           </section>
         </div>
         <div
-          className={`${border.border_graph}  w-full bg-[#0000008F] rounded-[10px]`}
+          className={`${border.border_graph}  flex-1GHHHGNJINOKKJMIIOJJNMM  NUHUH9UI0OM,JJJJ bg-[#0000008F] rounded-[10px]`}
         >
           <h2 className="text-[20px] p-4  font-semibold leading-[26px]">
             New Members
