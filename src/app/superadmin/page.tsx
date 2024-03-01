@@ -155,6 +155,7 @@ export default function DashboardPage() {
                 {statisticValue.map((value, index) => {
                   return (
                     <option
+                      key={index}
                       className={`hover:bg-primary  checked:bg-primary checked:text-white`}
                       value={value.value}
                     >
