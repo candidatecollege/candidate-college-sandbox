@@ -80,3 +80,44 @@
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
+.border_link_active {
+  position: relative;
+  background-blend-mode: lighten;
+  background: radial-gradient(
+      100% 100% at 0% 0%,
+      rgba(255, 222, 89, 0.12) 0%,
+      rgba(27, 78, 107, 0.12) 100%
+    )
+    /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+  background: #ffffff08;
+}
+.border_link_active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  padding: 0.5px;
+  background: radial-gradient(
+    100% 100% at 0% 0%,
+    rgba(255, 222, 89, 0.12) 0%,
+    rgba(27, 78, 107, 0.12) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.border_graph {
+  position: relative;
+}
+.border_graph::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  padding: 0.5px;
+  background: radial-gradient(100% 178.46% at 0% 0%, #ffde59 0%, #4a8cff 100%);
+
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
