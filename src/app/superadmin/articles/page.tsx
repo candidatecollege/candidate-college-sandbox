@@ -27,7 +27,7 @@ import {
 import Image from "next/image";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+//
 export default function PageArticlesSuperAdmin() {
   const [articles, setArticles] = useState([]);
   const [categoryArticles, setCategoryArticles] = useState<any[]>([]);
