@@ -31,7 +31,7 @@ import { useEffect, useState } from "react";
 export default function PageArticlesSuperAdmin() {
   const [articles, setArticles] = useState([]);
   const [categoryArticles, setCategoryArticles] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const statisticValue = [
     { value: "3", title: "3 days" },

@@ -39,7 +39,7 @@ const getWeekDays = (day: number) => {
 export default function DashboardPage() {
   const [day, setDay] = useState<string>("3");
   const [members, setMembers] = useState<any[]>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const fetchMember = async () => {
     setIsLoading(true);
@@ -278,7 +278,10 @@ export default function DashboardPage() {
               {isLoading
                 ? new Array(4).fill(0).map((_, index) => {
                     return (
-                      <div className="w-full flex h-10 py-2 px-2  gap-2 items-center rounded-[10px]">
+                      <div
+                        key={index}
+                        className="w-full flex h-10 py-2 px-2  gap-2 items-center rounded-[10px]"
+                      >
                         <div className="w-[30px] h-[30px] rounded-full bg-slate-700"></div>
                         <div className="w-full">
                           <div className=" w-full h-2  bg-slate-700"></div>
