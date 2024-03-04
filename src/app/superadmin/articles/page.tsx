@@ -27,17 +27,14 @@ import {
 import Image from "next/image";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import moment from "moment";
+import { format, subDays } from "date-fns";
+
 const getWeekDays = (day: number) => {
-  let result = [];
-  for (let i = 0; i < day; i++) {
-    let tujuhHariSebelumnya = moment().subtract(i, "days"); // menghitung 7 hari sebelum sekarang
-
-    result.push(tujuhHariSebelumnya.format("D MMM"));
-  }
-
-  return result.reverse();
+  return Array.from({ length: day }, (_, i) =>
+    format(subDays(new Date(), i), "d MMM")
+  ).reverse();
 };
+
 export default function PageArticlesSuperAdmin() {
   const [articles, setArticles] = useState([]);
   const [day, setDay] = useState<string>("3");
