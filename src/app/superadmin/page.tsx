@@ -6,7 +6,8 @@ import {
   PeopleIcon,
   StickNoteIcon,
 } from "@/components/icons";
-import moment from "moment";
+import { format, subDays } from "date-fns";
+
 import Progress from "@/components/superadmin/Progress";
 import Navbar from "@/components/superadmin/navbar";
 import border from "@/styles/border.module.css";
@@ -28,11 +29,9 @@ import axios from "axios";
 const getWeekDays = (day: number) => {
   let result = [];
   for (let i = 0; i < day; i++) {
-    let tujuhHariSebelumnya = moment().subtract(i, "days"); // menghitung 7 hari sebelum sekarang
-
-    result.push(tujuhHariSebelumnya.format("D MMM"));
+    let dayBefore = subDays(new Date(), i);
+    result.push(format(dayBefore, "d MMM"));
   }
-
   return result.reverse();
 };
 
