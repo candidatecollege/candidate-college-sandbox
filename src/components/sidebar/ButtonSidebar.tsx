@@ -6,17 +6,17 @@ export default function ButtonSidebar() {
   const { isActive, setIsActive } = useActive();
   return (
     <div
-      className={`py-3 ${
+      className={`py-3  ${
         isActive ? "w-[104px]" : "w-[256px]"
       }  transition-all ease-linear duration-[400ms] absolute`}
     >
-      <div className="py-2 relative">
+      <div className="py-2 relative ">
         <div
           onClick={() => setIsActive()}
-          className={`${styles.border_arrow}  flex justify-center item absolute bottom-3 -right-3 z-50    p-2 rounded-full  bg-[#0F090C66]  text-secondary`}
+          className={`${styles.border_arrow} cursor-pointer  flex justify-center item absolute bottom-3 -right-3 z-50    p-2 rounded-full  bg-[#0F090C66]  text-secondary`}
         >
           <IoIosArrowBack
-            className={`${isActive && "rotate-180"} transition-all`}
+            className={`${isActive && "rotate-180"}  transition-all`}
           />
         </div>
         <div className="w-[142px]  h-[80px] mx-auto" />
