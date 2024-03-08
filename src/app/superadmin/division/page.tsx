@@ -6,7 +6,7 @@ export default function PageDivisionSuperAdmin() {
     <main>
       <Navbar
           title="Division"
-          description="Welcome To Your Division Page"
+          description="Welcome To Your Division Dashboard"
           placeholder="Search for anything"
       />
       <br />
