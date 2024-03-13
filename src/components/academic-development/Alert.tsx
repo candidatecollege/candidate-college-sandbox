@@ -7,7 +7,7 @@ export default function Alert() {
   const { setIsActive } = useAlert();
   return (
     <div
-      className={` fixed animate__animated animate__fadeIn z-50  flex  inset-0 bg-[#000000CC] justify-center items-center`}
+      className={` fixed animate__animated animate__fadeIn z-[99999]  flex  inset-0 bg-[#000000CC] justify-center items-center`}
     >
       <div
         className={`${border.border_graph} rounded-[10px] w-[30%] flex p-8 flex-col items-center bg-[#1B4E6BE5]`}
