@@ -1,4 +1,4 @@
-export default () => {
+export default function RankingIcon() {
   return (
     <svg
       width="16"
@@ -33,4 +33,4 @@ export default () => {
       />
     </svg>
   );
-};
+}

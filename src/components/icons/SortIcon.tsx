@@ -1,4 +1,4 @@
-export default () => {
+export default function SortIcon() {
   return (
     <svg
       width="17"
@@ -27,4 +27,4 @@ export default () => {
       />
     </svg>
   );
-};
+}
