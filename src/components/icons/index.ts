@@ -14,6 +14,8 @@ import CalendarIcon from "./CalendarIcon";
 import ClockIcon from "./ClockIcon";
 import Trash2Icon from "./Trash2Icon";
 import BookIcon from "./BookIcon";
+import RankingIcon from "./RankingIcon";
+import SortIcon from "./SortIcon";
 
 export {
   TrashIcon,
@@ -32,4 +34,6 @@ export {
   ClockIcon,
   Trash2Icon,
   BookIcon,
+  SortIcon,
+  RankingIcon,
 };
