@@ -9,6 +9,7 @@ import iconStyles from "@/styles/icon.module.css";
 import useActive from "@/hooks/useActive";
 import Separator from "@/components/sidebar/Separator";
 import Link from "next/link";
+import useAlert from "@/hooks/useAlert";
 
 export default function SidebarMobile({
   navLink,
@@ -18,6 +19,7 @@ export default function SidebarMobile({
   pathname: any;
 }) {
   const { isActive } = useActive();
+  const { setIsActive } = useAlert();
 
   return (
     <section
@@ -73,6 +75,7 @@ export default function SidebarMobile({
       <div className="flex flex-auto justify-end mx-auto items-end">
         <div className={`w-full h-fit`}>
           <button
+            onClick={() => setIsActive(true)}
             className={`duration-300 transition-all ${iconStyles.logout_icon} hover:bg-primary p-3 drop-shadow-md justify-center rounded-xl items-center w-full  text-[14px] font-semibold bg-secondary flex gap-1`}
           >
             <LogoutIcon />

@@ -8,6 +8,7 @@ import iconStyles from "@/styles/icon.module.css";
 import useActive from "@/hooks/useActive";
 import Separator from "@/components/sidebar/Separator";
 import Link from "next/link";
+import useAlert from "@/hooks/useAlert";
 
 export default function SidebarDesktop({
   navLink,
@@ -17,6 +18,7 @@ export default function SidebarDesktop({
   pathname: string;
 }) {
   const { isActive } = useActive();
+  const { setIsActive } = useAlert();
   return (
     <section
       className={`${styles.border_nav} z-10 transition-all ${
@@ -81,6 +83,7 @@ export default function SidebarDesktop({
             For creating or adding new things
           </h4>
           <button
+            onClick={() => setIsActive(true)}
             className={` duration-300 ${iconStyles.logout_icon} hover:bg-primary transition-all hover:text-secondary p-3 drop-shadow-md justify-center rounded-xl items-center w-full  text-[14px] font-semibold bg-secondary flex gap-1`}
           >
             <LogoutIcon /> Log Out
