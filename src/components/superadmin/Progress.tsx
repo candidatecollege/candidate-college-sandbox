@@ -1,5 +1,4 @@
 export default function Progress({ percent }: { percent: string }) {
-  console.log(percent);
   return (
     <div>
       <div className="bg-white relative h-[3px] w-full rounded-2xl">
