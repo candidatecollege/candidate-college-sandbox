@@ -28,7 +28,7 @@ import Image from "next/image";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function PageArticlesSuperAdmin() {
+export default function PageDashboardAcdev() {
   const [articles, setArticles] = useState([]);
   const [categoryArticles, setCategoryArticles] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
