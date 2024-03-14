@@ -121,3 +121,36 @@
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
+.border_member_top {
+  position: relative;
+}
+.border_member_top::before {
+  content: "";
+  position: absolute;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  inset: 0;
+  padding: 0.5px;
+  background: radial-gradient(100% 178.46% at 0% 0%, #ffde59 0%, #4a8cff 100%);
+
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.border_member_bot {
+  position: relative;
+}
+.border_member_bot::before {
+  margin-top: -0.5px;
+  content: "";
+  position: absolute;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  inset: 0;
+  padding: 0.5px;
+  background: radial-gradient(100% 178.46% at 0% 0%, #ffde59 0%, #4a8cff 100%);
+
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}

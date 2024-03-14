@@ -1,5 +1,5 @@
 "use client";
-import NewSidebar from "@/components/NewSidebar";
+import NewSidebar from "@/components/academic-development/NewSidebar";
 import useActive from "@/hooks/useActive";
 import { CiSearch } from "react-icons/ci";
 
