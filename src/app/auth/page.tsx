@@ -108,7 +108,7 @@ const Auth: React.FC<any> = ({ type }) => {
             src={"/logo-full-cc.png"}
           />
           <h1 className="text-[40px] font-bold">Log In To Your Account</h1>
-          <h2 className="text-[16px]">Manage All Data For CC's Website</h2>
+          <h2 className="text-[16px]">Manage All Data For CC&apos;s Website</h2>
           <InputEmail email={email} setEmail={setEmail} className="mt-8" />
           <InputPassword
             className="mt-6"
@@ -126,7 +126,7 @@ const Auth: React.FC<any> = ({ type }) => {
             Login
           </button>
           <p className="text-[12px] mt-5 text-center">
-            Don't Have An Account?{" "}
+            Don&apos;t Have An Account?{" "}
             <span className="text-secondary">Contact Your Admin</span>
           </p>
         </div>
