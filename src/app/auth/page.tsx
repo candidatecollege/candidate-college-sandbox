@@ -28,13 +28,6 @@ const Auth: React.FC<any> = ({ type }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [rememberme, setRememberme] = useState<boolean>(false);
 
-  const onChangeEmail = (e: any) => {
-    setEmail(e.target.value);
-  };
-  const onChangePassword = (e: any) => {
-    setPassword(e.target.value);
-  };
-
   const handleLoginUser = async (e: any) => {
     e.preventDefault();
 
@@ -109,22 +102,30 @@ const Auth: React.FC<any> = ({ type }) => {
           />
           <h1 className="text-[40px] font-bold">Log In To Your Account</h1>
           <h2 className="text-[16px]">Manage All Data For CC&apos;s Website</h2>
-          <InputEmail email={email} setEmail={setEmail} className="mt-8" />
-          <InputPassword
-            className="mt-6"
-            password={password}
-            setPassword={setPassword}
-          />
+          <form onSubmit={handleLoginUser}>
+            <InputEmail email={email} setEmail={setEmail} className="mt-8" />
+            <InputPassword
+              className="mt-6"
+              password={password}
+              setPassword={setPassword}
+            />
 
-          <div className="flex mt-3 justify-between items-center">
-            <RememberMe rememberme={rememberme} setRememberme={setRememberme} />
-            <Link href={"#"} className="text-[12px] text-secondary">
-              Forgot Your Password?
-            </Link>
-          </div>
-          <button className="button-login rounded-[5px] mt-8 w-full bg-[radial-gradient(100%_100%_at_0%_0%,#FFDE59_0%,#5EACDD_100%)] p-2">
-            Login
-          </button>
+            <div className="flex mt-3 justify-between items-center">
+              <RememberMe
+                rememberme={rememberme}
+                setRememberme={setRememberme}
+              />
+              <Link href={"#"} className="text-[12px] text-secondary">
+                Forgot Your Password?
+              </Link>
+            </div>
+            <button
+              type="submit"
+              className="button-login rounded-[5px] mt-8 w-full bg-[radial-gradient(100%_100%_at_0%_0%,#FFDE59_0%,#5EACDD_100%)] p-2"
+            >
+              Login
+            </button>
+          </form>
           <p className="text-[12px] mt-5 text-center">
             Don&apos;t Have An Account?{" "}
             <span className="text-secondary">Contact Your Admin</span>
