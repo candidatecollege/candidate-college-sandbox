@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+.animate__animated.animate__fadeOut {
+  --animate-duration: 700ms;
+}
+.animate__animated.animate__fadeIn {
+  --animate-duration: 700ms;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
