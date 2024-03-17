@@ -18,9 +18,22 @@ export default function CreateArticlesPage() {
         className={` ${border.border_add_article} mt-3 bg-[rgba(0,0,0,0.56)] p-8 rounded-[10px]`}
       >
         <div className="">
-          <div className="grid grid-cols-2 gap-7 ">
+          <div className="grid grid-cols-2 gap-x-7 gap-y-4 ">
             <DropInputFile text="Upload Cover" />
             <DropInputFile text="Upload Landscape Cover" />
+            <div className="relative">
+              <label htmlFor="title">Title*</label>
+              <div
+                className={`${border.border_input_article} mt-1 rounded-[5px] before:bg-[radial-gradient(100%_100%_at_0%_0%,#ffde59_0%,#5eacdd_100%)]`}
+              >
+                <input
+                  type="text"
+                  id="title"
+                  placeholder="Title"
+                  className="w-full bg-transparent outline-none p-3 relative"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
