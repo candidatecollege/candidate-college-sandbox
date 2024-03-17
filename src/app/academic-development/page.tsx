@@ -13,7 +13,7 @@ import {
   PluginChartOptions,
   Plugin,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
+import { Bar, Doughnut } from "react-chartjs-2";
 import border from "@/styles/border.module.css";
 
 import {
@@ -29,22 +29,31 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { format, subDays } from "date-fns";
 
+import Link from "next/link";
+import { Calendar } from "react-multi-date-picker";
+// import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
+import "@/styles/bg-custom.css";
+import "react-multi-date-picker/styles/colors/yellow.css";
+import Alert from "@/components/academic-development/Alert";
+import useAlert from "@/hooks/useAlert";
+
 const getWeekDays = (day: number) => {
   return Array.from({ length: day }, (_, i) =>
     format(subDays(new Date(), i), "d MMM")
   ).reverse();
 };
 
-export default function PageArticlesSuperAdmin() {
+export default function PageDashboardAcdev() {
   const [articles, setArticles] = useState([]);
   const [day, setDay] = useState<string>("3");
   const [categoryArticles, setCategoryArticles] = useState<any[]>([]);
+  const { isActive } = useAlert();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const statisticValue = [
     { value: "3", title: "3 days" },
     { value: "7", title: "7 days" },
-    { value: "all", title: "all days" },
+    { value: "specific", title: "Specific days" },
   ];
 
   const fetchArticles = async () => {
@@ -138,19 +147,21 @@ export default function PageArticlesSuperAdmin() {
   return (
     <main>
       <Navbar
-        title="Article"
-        description="Welcome To Your Article Dashboard"
+        title="Dashboard"
+        description="Welcome To Your Dashboard"
         placeholder="Search for anything"
       />
+      {isActive && <Alert />}
       <div className="flex gap-6 h-fit mt-4">
         <section
-          className={`${border.border_graph} pb-16 relative  w-1/2 rounded-[10px]  p-4 bg-[#0000008F]`}
+          className={`${border.border_graph}  relative  w-1/2 rounded-[10px]  p-4 bg-[#0000008F]`}
         >
           <div className="flex items-center relative justify-between">
             <div>
               <h2 className="text-[20px] font-semibold leading-[26px]">
                 Statistics last
               </h2>
+
               <h3 className="text-[16px] text-[#FFFFFF8F]">Document</h3>
             </div>
             <select
@@ -172,22 +183,32 @@ export default function PageArticlesSuperAdmin() {
               })}
             </select>
           </div>
-
-          <Bar
-            options={{
-              maintainAspectRatio: false,
-              // scales: {
-              //   x: {
-              //     min: 0,
-              //     max: 7,
-              //   },
-              // },
-              plugins: { legend: { display: false } },
-              responsive: true,
-            }}
-            className="absolute"
-            data={dataBar}
-          />
+          {day == "specific" && (
+            <div className="w-full flex justify-end">
+              <Calendar
+                className="yellow bg-dark"
+                multiple
+                onChange={(e) => console.log(e)}
+              />
+            </div>
+          )}
+          <div className="">
+            <Bar
+              options={{
+                maintainAspectRatio: false,
+                // scales: {
+                //   x: {
+                //     min: 0,
+                //     max: 7,
+                //   },
+                // },
+                plugins: { legend: { display: false } },
+                responsive: true,
+              }}
+              className=""
+              data={dataBar}
+            />
+          </div>
         </section>
         <section className="w-1/2">
           <h2 className="font-semibold flex items-center gap-3 text-[22px]">
@@ -248,7 +269,12 @@ export default function PageArticlesSuperAdmin() {
           <h2 className="font-semibold flex items-center gap-3 text-[22px]">
             Article Published <BookmarkIcon />
           </h2>
-          <h3 className="text-[14px] text-[#FFFFFF8F]">View all</h3>
+          <Link
+            href={"/academic-development/articles"}
+            className="text-[14px] text-[#FFFFFF8F]"
+          >
+            View all
+          </Link>
         </div>
         <div className="flex gap-4 mt-2">
           {isLoading

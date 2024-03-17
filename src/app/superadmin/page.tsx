@@ -6,6 +6,8 @@ import {
   PeopleIcon,
   StickNoteIcon,
 } from "@/components/icons";
+import { format, subDays } from "date-fns";
+
 import Progress from "@/components/superadmin/Progress";
 import Navbar from "@/components/superadmin/navbar";
 import border from "@/styles/border.module.css";
@@ -21,8 +23,35 @@ import {
   BarElement,
 } from "chart.js";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+const getWeekDays = (day: number) => {
+  let result = [];
+  for (let i = 0; i < day; i++) {
+    let dayBefore = subDays(new Date(), i);
+    result.push(format(dayBefore, "d MMM"));
+  }
+  return result.reverse();
+};
 
 export default function DashboardPage() {
+  const [day, setDay] = useState<string>("3");
+  const [members, setMembers] = useState<any[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const fetchMember = async () => {
+    setIsLoading(true);
+    const data = await axios.get("/api/members?count=8");
+    setMembers(data.data.data.reverse().slice(0, 8));
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchMember();
+  }, []);
+
+  getWeekDays(parseInt(day));
   ChartJS.register(
     ArcElement,
     BarElement,
@@ -31,6 +60,7 @@ export default function DashboardPage() {
     LinearScale,
     CategoryScale
   );
+
   const statisticValue = [
     { value: "3", title: "3 days" },
     { value: "7", title: "7 days" },
@@ -38,7 +68,7 @@ export default function DashboardPage() {
   ];
 
   const dataDoughnut = {
-    labels: ["Ongoing Events", "Attented", "Upcoming Events"],
+    labels: ["Ongoing Events", "Held", "Upcoming Events"],
     datasets: [
       {
         data: [4, 12, 43],
@@ -76,29 +106,32 @@ export default function DashboardPage() {
   ];
 
   const dataBar = {
-    labels: [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ],
+    labels:
+      day == "all"
+        ? [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+          ]
+        : day == "3"
+        ? getWeekDays(3)
+        : getWeekDays(7),
     datasets: [
       {
-        data: [12, 4, 53, 3, 4, 43, 15],
-
+        data:
+          day == "all"
+            ? [32, 12, 4, 6, 12, 4, 63]
+            : day == "3"
+            ? [12, 4, 63]
+            : [32, 12, 4, 6, 12, 4, 63],
+        barThickness: 35,
         borderRadius: 50,
         backgroundColor: "#FFDE59",
-        label: "Man",
-      },
-      {
-        data: [10, 3, 5, 67, 32, 2, 45],
-
-        label: "Woman",
-        borderRadius: 50,
-        backgroundColor: "#1B4E6B",
+        label: "Total Count",
       },
     ],
   } as ChartData<"bar">;
@@ -151,6 +184,7 @@ export default function DashboardPage() {
                 className="bg-secondary    p-[6px] rounded-[10px]  font-medium text-[15px] text-primary"
                 name=""
                 id=""
+                onChange={(e) => setDay(e.target.value)}
               >
                 {statisticValue.map((value, index) => {
                   return (
@@ -167,7 +201,17 @@ export default function DashboardPage() {
             </div>
 
             <Bar
-              options={{ maintainAspectRatio: false, responsive: true }}
+              options={{
+                maintainAspectRatio: false,
+                // scales: {
+                //   x: {
+                //     min: 0,
+                //     max: 7,
+                //   },
+                // },
+                plugins: { legend: { display: false } },
+                responsive: true,
+              }}
               className="absolute"
               data={dataBar}
             />
@@ -189,7 +233,7 @@ export default function DashboardPage() {
                 </li>
                 <li className="flex gap-2 text-[14px] font-medium items-center">
                   <div className="rounded-[5px] w-[14px] !aspect-square h-[14px] bg-secondary" />
-                  Attended
+                  Held
                 </li>
                 <li className="flex gap-2 text-[14px] font-medium items-center">
                   <div className="rounded-[5px] w-[14px] !aspect-square h-[14px] bg-primary" />
@@ -212,49 +256,66 @@ export default function DashboardPage() {
           </section>
         </div>
         <div
-          className={`${border.border_graph}  flex-1 bg-[#0000008F] rounded-[10px]`}
+          className={`${border.border_graph} !h-fit  flex-1 bg-[#0000008F] rounded-[10px]`}
         >
           <h2 className="text-[20px] p-4  font-semibold leading-[26px]">
             New Members
           </h2>
           <div className="">
-            <div className=" flex bg-secondary w-full  px-6 py-2">
-              <div className="font-semibold flex-1 text-[14px] text-primary ">
+            <div className=" flex bg-secondary w-full gap-3  px-6 py-2">
+              <div className="font-semibold flex-1 text-[14px]  text-primary ">
                 NAME
               </div>
-              <div className="font-semibold flex-1 text-[14px] text-primary">
+              <div className="font-semibold flex-1 text-[14px]  text-primary">
                 DATE EMPLOYED
               </div>
-              <div className="font-semibold flex-1 text-[14px] text-primary">
+              <div className="font-semibold flex-1 text-[14px]  text-primary">
                 DIVISION
               </div>
             </div>
             <div className="px-4 py-2 flex flex-col gap-2">
-              {new Array(8).fill(0).map((_, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="flex group hover:text-[#fff]  transition-all text-[#FFFFFF8F] rounded-[10px] py-2 px-2 hover:bg-[#1B4E6B1A] relative w-full  "
-                  >
-                    <div className="font-medium flex  gap-3 flex-1 text-[14px]">
-                      <Image
-                        width={100}
-                        height={100}
-                        alt="Profile"
-                        src={"/Avatar.png"}
-                        className="rounded-full group-hover:opacity-100 transition-all opacity-60 h-[30px] w-[30px]"
-                      />
-                      <div className="mt-[4px]">Gita</div>
-                    </div>
-                    <div className="font-medium flex-1 text-[14px] ">
-                      <div className="mt-[4px]">January 12, 2024 </div>
-                    </div>
-                    <div className="font-medium flex-1 text-[14px] ">
-                      <div className="mt-[4px] ">Lead UI/UX Designer</div>
-                    </div>
-                  </div>
-                );
-              })}
+              {isLoading
+                ? new Array(4).fill(0).map((_, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="w-full flex h-10 py-2 px-2  gap-2 items-center rounded-[10px]"
+                      >
+                        <div className="w-[30px] h-[30px] rounded-full bg-slate-700"></div>
+                        <div className="w-full">
+                          <div className=" w-full h-2  bg-slate-700"></div>
+                          <div className=" w-full h-2  bg-slate-700 mt-1"></div>
+                        </div>
+                      </div>
+                    );
+                  })
+                : members?.map((val, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="flex group hover:text-[#fff] gap-7 transition-all text-[#FFFFFF8F] rounded-[10px] py-2 px-2 hover:bg-[#1B4E6B1A] relative w-full  "
+                      >
+                        <div className="font-medium flex  gap-3 flex-1 items-center text-[14px]">
+                          <Image
+                            width={100}
+                            height={100}
+                            alt="Profile"
+                            src={`/uploads/${val.image}`}
+                            className="rounded-full object-cover   group-hover:opacity-100 transition-all opacity-60 aspect-square h-[30px] w-[30px]"
+                          />
+                          <div className="">{val.name}</div>
+                        </div>
+                        <div className="font-medium flex-1 text-[14px] ">
+                          <div className="">January 1, 2024 </div>
+                        </div>
+                        <div className="font-medium flex-1 text-[14px] ">
+                          <div className=" ">
+                            {val.position} {val.division}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
             </div>
           </div>
         </div>

@@ -6,8 +6,9 @@ import styles from "@/styles/border.module.css";
 
 import iconStyles from "@/styles/icon.module.css";
 import useActive from "@/hooks/useActive";
-import Separator from "./Separator";
+import Separator from "@/components/sidebar/Separator";
 import Link from "next/link";
+import useAlert from "@/hooks/useAlert";
 
 export default function SidebarDesktop({
   navLink,
@@ -17,11 +18,12 @@ export default function SidebarDesktop({
   pathname: string;
 }) {
   const { isActive } = useActive();
+  const { setIsActive } = useAlert();
   return (
     <section
       className={`${styles.border_nav} z-10 transition-all ${
         isActive
-          ? "animate__animated animate__fadeOut pointer-events-none !absolute inset-y-0"
+          ? "animate__animated animate__fadeOut  !absolute inset-y-0"
           : "animate__animated animate__fadeIn"
       }  flex flex-col bg-[#0000008F] h-full py-6 w-[256px] `}
     >
@@ -60,7 +62,7 @@ export default function SidebarDesktop({
                 key={index}
                 href={path}
                 className={`${styles.border_link} ${
-                  path == "/superadmin"
+                  path == "/academic-development"
                     ? pathname == path && styles.border_link_active
                     : pathname.startsWith(path) && styles.border_link_active
                 } rounded-[10px]  px-5 py-3 flex gap-4 items-center text-[#FFFFFF8F] text-[14px]`}
@@ -81,6 +83,7 @@ export default function SidebarDesktop({
             For creating or adding new things
           </h4>
           <button
+            onClick={() => setIsActive(true)}
             className={` duration-300 ${iconStyles.logout_icon} hover:bg-primary transition-all hover:text-secondary p-3 drop-shadow-md justify-center rounded-xl items-center w-full  text-[14px] font-semibold bg-secondary flex gap-1`}
           >
             <LogoutIcon /> Log Out
