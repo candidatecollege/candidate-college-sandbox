@@ -7,6 +7,7 @@ import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
 import { useEffect, useState } from "react";
 
+// interface
 interface Member {
   id: string;
   name: string;
