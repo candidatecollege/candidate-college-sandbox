@@ -6,8 +6,8 @@ import axios from "axios";
 import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
 import { useEffect, useState } from "react";
+import BatchFilter from "@/components/superadmin/BatchFilter";
 
-// interface
 interface Member {
   id: string;
   name: string;
@@ -20,8 +20,7 @@ interface Member {
 
 export default function PageSuperAdminMember() {
   const [members, setMembers] = useState<Member[]>();
-  const [batch, setBatch] = useState<string>();
-  const [drop, setDrop] = useState<boolean>(false);
+  const [batch, setBatch] = useState<any>();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchMember = async () => {
@@ -68,46 +67,7 @@ export default function PageSuperAdminMember() {
               <button className="flex items-center gap-1 text-[12px] border  rounded-[5px] px-2 py-1">
                 <SortIcon /> Filter
               </button>
-              <div className="relative text-[12px]">
-                <button
-                  onClick={() => setDrop((v) => !v)}
-                  className="flex items-center gap-2 border  rounded-[5px] px-2 py-1"
-                >
-                  <div className="flex items-center gap-1">
-                    <RankingIcon /> {batch ? batch : "Batch"}
-                  </div>
-                  <IoIosArrowDown
-                    className={`${drop && "rotate-180"} transition-all`}
-                  />
-                </button>
-                <div
-                  className={`absolute  z-10 mt-2 duration-300  transition-all rounded-[5px]  ${
-                    drop
-                      ? "opacity-100  cursor-pointer"
-                      : "opacity-0 cursor-default"
-                  }  overflow-hidden inset-x-0`}
-                >
-                  {options.map((value, index) => {
-                    return (
-                      <div
-                        data-value={value}
-                        onClick={(e) => {
-                          setBatch(e.currentTarget.dataset.value);
-                          setDrop(false);
-                        }}
-                        key={index}
-                        className={`w-full text-[12px] ${
-                          batch === value
-                            ? "bg-secondary text-primary"
-                            : "bg-primary text-secondary"
-                        }  flex justify-center py-2    hover:bg-secondary hover:text-primary  `}
-                      >
-                        {value}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+              <BatchFilter currentBatch={batch} setBatch={setBatch} />
             </div>
           </div>
         </div>
