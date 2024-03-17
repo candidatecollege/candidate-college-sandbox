@@ -7,7 +7,7 @@ export default function Navbar({
 }: {
   title: string;
   description: string;
-  placeholder: string;
+  placeholder?: string;
 }) {
   return (
     <nav className="flex justify-between items-center">
@@ -17,16 +17,18 @@ export default function Navbar({
           {description}
         </p>
       </div>
-      <div className="w-fit flex text-[#ffffff8f] ">
-        <button className="px-4  text-[16px] rounded-l-[10px] py-3 bg-[#0000008F]">
-          <CiSearch />
-        </button>
-        <input
-          className="bg-[#0000008F] text-[#ffffff8f]  text-[13px] leading-[20px]    rounded-r-[10px] pr-4 outline-none"
-          placeholder={placeholder}
-          type="text"
-        />
-      </div>
+      {placeholder && (
+        <div className="w-fit flex text-[#ffffff8f] ">
+          <button className="px-4  text-[16px] rounded-l-[10px] py-3 bg-[#0000008F]">
+            <CiSearch />
+          </button>
+          <input
+            className="bg-[#0000008F] text-[#ffffff8f]  text-[13px] leading-[20px]    rounded-r-[10px] pr-4 outline-none"
+            placeholder={placeholder}
+            type="text"
+          />
+        </div>
+      )}
     </nav>
   );
 }

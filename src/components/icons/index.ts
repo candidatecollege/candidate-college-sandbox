@@ -17,6 +17,7 @@ import BookIcon from "./BookIcon";
 import RankingIcon from "./RankingIcon";
 import SortIcon from "./SortIcon";
 import AlarmIcon from "./AlarmIcon";
+import DirectSendIcon from "./DirectSendIcon";
 
 export {
   TrashIcon,
@@ -38,4 +39,5 @@ export {
   SortIcon,
   RankingIcon,
   AlarmIcon,
+  DirectSendIcon,
 };

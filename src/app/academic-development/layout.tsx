@@ -10,10 +10,10 @@ export default function LayoutSuperAdmin({
 }) {
   const { isActive } = useActive();
   return (
-    <main className="flex w-full min-h-screen shadow-lg bg-primary text-primary">
+    <main className="flex w-full min-h-screen z-10 shadow-lg bg-primary text-primary">
       <NewSidebar />
       <div
-        className={`transition-all bg-primary w-full min-h-screen ease-linear  duration-[400ms] absolute ${
+        className={`transition-all z-10 bg-primary w-full min-h-screen ease-linear  duration-[400ms] absolute ${
           isActive ? "pl-[104px]" : "pl-[256px]"
         } text-white`}
       >

@@ -38,7 +38,7 @@ export default function NewSidebar() {
   ];
 
   return (
-    <div className="fixed z-30 inset-y-0">
+    <div className="fixed z-20 inset-y-0">
       {/* // <> */}
       <ButtonSidebar />
       {/* Sidebar mobile */}
