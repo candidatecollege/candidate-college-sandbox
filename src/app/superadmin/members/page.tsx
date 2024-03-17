@@ -7,15 +7,26 @@ import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
 import { useEffect, useState } from "react";
 
+interface Member {
+  id: string;
+  name: string;
+  image: string;
+  position: string;
+  division: string;
+  instagram: string;
+  linkedin: string;
+}
+
 export default function PageSuperAdminMember() {
-  const [members, setMembers] = useState<any[]>();
-  const [batch, setBatch] = useState<any>();
+  const [members, setMembers] = useState<Member[]>();
+  const [batch, setBatch] = useState<string>();
   const [drop, setDrop] = useState<boolean>(false);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchMember = async () => {
     setIsLoading(true);
     const data = await axios.get("/api/members?count=8");
+    console.log(data.data.data);
     setMembers(data.data.data);
     setIsLoading(false);
   };
