@@ -1,15 +1,34 @@
 import Dropzone, { useDropzone } from "react-dropzone";
-import { DirectSendIcon } from "../icons";
+import { DirectSendIcon } from "../../icons";
 import border from "@/styles/border.module.css";
+import { SetStateAction, useEffect, useState } from "react";
 
-function DropInputFile({ text }: { text: string }) {
+function DropInputFile({
+  text,
+  setValue,
+  value,
+}: {
+  text: string;
+  setValue: React.Dispatch<SetStateAction<Blob | string>>;
+  value: string | Blob;
+}) {
+  const [path, setPath] = useState<string>();
+  useEffect(() => {
+    if (value == "") {
+      setPath(undefined);
+    }
+  }, [value]);
   return (
     <Dropzone
+      accept={{
+        "image/*": [".jpeg", ".jpg", ".png", ".webp"],
+      }}
       onDrop={(e) => {
-        console.log(e);
+        setPath(e[0].name);
+        setValue(e[0]);
       }}
     >
-      {({ getRootProps, getInputProps, isDragActive }) => (
+      {({ getRootProps, getInputProps, isDragActive, fileRejections }) => (
         <div
           className={`cursor-pointer h-fit p-6 ${border.border_input_article} ${
             isDragActive
@@ -23,12 +42,14 @@ function DropInputFile({ text }: { text: string }) {
             <div className="bg-secondary w-fit p-2 rounded-[5px]">
               <DirectSendIcon />
             </div>
+
+            {fileRejections.length !== 0 && <p>File not Accept</p>}
             {isDragActive ? (
               <p>Release Here...</p>
+            ) : path ? (
+              <p className="text-center">{path}</p>
             ) : (
-              <>
-                <p>{text}</p>
-              </>
+              <p>{text}</p>
             )}
             <p className="text-sm text-[rgba(255,255,255,0.56)]">
               File Max 500 Kb
