@@ -30,6 +30,9 @@ module.exports = {
         border: "rgba(255, 255, 255, 0.16)",
         tersier: "#90A3BF",
       },
+      borderRadius: {
+        small: "5px",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
