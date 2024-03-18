@@ -17,12 +17,9 @@ import BookIcon from "./BookIcon";
 import RankingIcon from "./RankingIcon";
 import SortIcon from "./SortIcon";
 import AlarmIcon from "./AlarmIcon";
-<<<<<<< HEAD
 import DirectSendIcon from "./DirectSendIcon";
-=======
 import SMSIcon from "./SMSIcon";
 import LockIcon from "./LockIcon";
->>>>>>> a5437dbe9357936c92ddea80c0e6d31d885ebd80
 
 export {
   TrashIcon,
@@ -44,10 +41,7 @@ export {
   SortIcon,
   RankingIcon,
   AlarmIcon,
-<<<<<<< HEAD
   DirectSendIcon,
-=======
   SMSIcon,
   LockIcon,
->>>>>>> a5437dbe9357936c92ddea80c0e6d31d885ebd80
 };
