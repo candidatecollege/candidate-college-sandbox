@@ -51,9 +51,10 @@ export default function Home() {
     }).then(async (result: any) => {
       if (result.isConfirmed) {
         try {
-          const response = await axios.delete(
+          const response = await axios.post(
             // `http://resource-candidatecollege.infinityfreeapp.com/api/articles/${slug}`,
-            `/api/articles/${slug}`,
+            `/api/articles/${slug}/delete`,
+            {},
             {
               headers: {
                 Authorization: `Bearer ${storedToken}`,

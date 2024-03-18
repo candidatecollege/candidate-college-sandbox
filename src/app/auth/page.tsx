@@ -1,122 +1,88 @@
-'use client'
-import { Input } from '@/components'
-import Loader from '@/components/Loader'
-import { getToken, setTokenWithExpiration } from '@/utils/token'
-import axios, { isAxiosError } from 'axios'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
-import Swal from 'sweetalert2'
+"use client";
+
+import InputEmail from "@/components/auth/InputEmail";
+import InputPassword from "@/components/auth/InputPassword";
+import Welcome from "@/components/auth/Welcome";
+import { getToken } from "@/utils/token";
+
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+
+import RememberMe from "@/components/auth/RememberMe";
+import Link from "next/link";
+import "@/styles/auth.css";
+import { useLoginForm } from "@/hooks/useAuthLoginForm";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Auth: React.FC<any> = ({ type }) => {
-  const router = useRouter()
-  const storedToken = getToken()
-  
+  const router = useRouter();
+  const storedToken = getToken();
+  const { email, setEmail, password, setPassword, isLoading, handleLogin } =
+    useLoginForm();
+
   if (storedToken) {
-    router.push('/')
+    router.push("/");
   }
 
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-
-  const onChangeEmail = (e: any) => { setEmail(e.target.value) }
-  const onChangePassword = (e: any) => { setPassword(e.target.value) }
-
-  const handleLoginUser = async (e: any) => {
-    e.preventDefault()
-
-    setIsLoading(true)
-
-    const formData = new FormData()
-    formData.append('email', email)
-    formData.append('password', password)
-
-    try {
-      const response = await axios.post('/api/login', formData)
-
-      setIsLoading(false)
-
-      Swal.fire({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        icon: 'success',
-        title: 'Successfully log in!'
-      })
-
-      setTokenWithExpiration(response.data.authorization.token, 3600)
-
-      router.push('/')
-    } catch (error) {
-      setIsLoading(false)
-      if (isAxiosError(error) && error.response && error.response.status === 401) {
-        Swal.fire({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          icon: 'error',
-          title: 'Failed to login, username or password is wrong!',
-        })
-      } else {
-        Swal.fire({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          icon: 'error',
-          title: 'Internal server error, please login again later!',
-        })
-      }
-    }
-
-    setEmail("")
-    setPassword("")
-  }
+  const [rememberme, setRememberme] = useState<boolean>(false);
 
   return (
-    <main className="flex flex-col md:flex-row w-full h-screen bg-primary relative items-center justify-center">
-      <section className={`flex flex-col gap-10 ${isLoading ? 'pt-14 pb-6' : 'py-14'} px-8 bg-white w-fit md:w-[45%] rounded-3xl`}>
-        <div className="flex flex-col gap-1 w-full items-center justify-center">
-          <h1 className="h1 text-4xl font-semibold text-primary">Welcome Back!</h1>
-          <p className="text-base text-tersier">Manage All Data for {"CC's"} Website</p>
+    <main className="flex bg-primary min-h-screen">
+      <Welcome />
+      <section className="flex-1 flex justify-center items-center">
+        <div className="w-[70%]">
+          <Image
+            alt="Logo Full CC"
+            height={100}
+            width={100}
+            className="w-[142px]"
+            src={"/logo-full-cc.png"}
+          />
+          <h1 className="text-4xl font-bold">Log In To Your Account</h1>
+          <h2 className="text-sm mt-2">
+            Manage All Data For CC&apos;s Website
+          </h2>
+          <form onSubmit={handleLogin}>
+            <InputEmail email={email} setEmail={setEmail} className="mt-8" />
+            <InputPassword
+              className="mt-6"
+              password={password}
+              setPassword={setPassword}
+            />
+
+            <div className="flex mt-3 justify-between items-center">
+              <RememberMe
+                rememberme={rememberme}
+                setRememberme={setRememberme}
+              />
+              <Link href={"#"} className="text-xs text-secondary">
+                Forgot Your Password?
+              </Link>
+            </div>
+            <button
+              disabled={isLoading ? true : false}
+              type="submit"
+              className="button-login rounded-small flex justify-center items-center mt-8 w-full bg-[radial-gradient(100%_100%_at_0%_0%,#FFDE59_0%,#5EACDD_100%)] p-2"
+            >
+              {isLoading ? (
+                <div className="flex items-center gap-2">
+                  <AiOutlineLoading3Quarters className="animate-spin" />{" "}
+                  Loading...
+                </div>
+              ) : (
+                "Login"
+              )}
+            </button>
+          </form>
+          <p className="text-xs  mt-5 text-center">
+            Don&apos;t Have An Account?{" "}
+            <span className="text-secondary">Contact Your Admin</span>
+          </p>
         </div>
-
-        <form onSubmit={handleLoginUser} action="post" autoComplete='off' className="flex flex-col gap-4">
-          <Input 
-              label="Email"
-              name="email"
-              type="email"
-              placeholder="candidatecollege@ind.com"
-              value={email}
-              onChange={onChangeEmail}
-              width='full'
-          />
-
-          <Input 
-              label="Password"
-              name="password"
-              type="password"
-              placeholder="**********"
-              value={password}
-              onChange={onChangePassword}
-              width='full'
-          />
-
-          {
-            isLoading ? <Loader /> : (<button about="Login" title="Login" type='submit' className={`bg-secondary text-primary font-medium text-base rounded-full px-2 md:px-5 py-4 text-center cursor-pointer mt-4 hover:bg-primary hover:text-white md:mt-0 w-full duration-700 transition-all`}>Login</button>)
-          }
-        </form>
       </section>
-
-      <p className="text-sm text-tersier absolute bottom-8 text-center">&copy; Candiate College 2023</p>
     </main>
-  )
-}
+  );
+};
 
-export default Auth
+export default Auth;

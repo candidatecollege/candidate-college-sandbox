@@ -51,7 +51,7 @@ export default function Home() {
     }).then(async (result: any) => {
         if (result.isConfirmed) {
             try {
-                const response = await axios.delete(`/api/events/${slug}`, {
+                const response = await axios.post(`/api/events/${slug}/delete`, {}, {
                     headers: {
                         Authorization: `Bearer ${storedToken}`,
                     },
