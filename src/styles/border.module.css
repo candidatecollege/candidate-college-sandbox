@@ -144,6 +144,7 @@
 }
 .border_input_article::before {
   content: "";
+}
 .border_input {
   position: relative;
 }
