@@ -36,6 +36,8 @@ import "@/styles/bg-custom.css";
 import "react-multi-date-picker/styles/colors/yellow.css";
 import Alert from "@/components/academic-development/Alert";
 import useAlert from "@/hooks/useAlert";
+import { useRouter } from "next/navigation";
+import { getToken } from "@/utils/token";
 
 const getWeekDays = (day: number) => {
   return Array.from({ length: day }, (_, i) =>
@@ -49,12 +51,20 @@ export default function PageDashboardAcdev() {
   const [categoryArticles, setCategoryArticles] = useState<any[]>([]);
   const { isActive } = useAlert();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const router = useRouter();
+  const storedToken = getToken();
 
   const statisticValue = [
     { value: "3", title: "3 days" },
     { value: "7", title: "7 days" },
     { value: "specific", title: "Specific days" },
   ];
+
+  useEffect(() => {
+    if (!storedToken) {
+      router.push("/auth");
+    }
+  }, [storedToken, router]);
 
   const fetchArticles = async () => {
     setIsLoading(true);

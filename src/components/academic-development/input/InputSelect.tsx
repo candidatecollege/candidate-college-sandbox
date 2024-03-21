@@ -18,7 +18,7 @@ export default function InputSelect({
     setIsLoading(true);
     try {
       const data = await axios.get("/api/article/categories");
-      console.log(data.data.data);
+
       setCategories(data.data.data);
     } catch (err) {
       console.log(err);
@@ -26,7 +26,6 @@ export default function InputSelect({
     setIsLoading(false);
   };
   useEffect(() => {
-    console.log("WW");
     fetchData();
   }, []);
 

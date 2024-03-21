@@ -42,8 +42,12 @@ function DropInputFile({
             <div className="bg-secondary w-fit p-2 rounded-[5px]">
               <DirectSendIcon />
             </div>
-
-            {fileRejections.length !== 0 && <p>File not Accept</p>}
+            {fileRejections.length !== 0 && (
+              <p className="text-red-500 text-center mt-2">
+                File not accepted. Please upload a JPEG, JPG, PNG, or WEBP image
+                under 500KB.
+              </p>
+            )}
             {isDragActive ? (
               <p>Release Here...</p>
             ) : path ? (

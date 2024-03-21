@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 
 export default function Form() {
   const editorRef = useRef<any>(null);
-  const router = useRouter();
+
   const storedToken = getToken();
   const [cover, setCover] = useState<Blob | string>("");
   const [landscapeCover, setLandscapeCover] = useState<Blob | string>("");
