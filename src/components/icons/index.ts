@@ -19,6 +19,8 @@ import SortIcon from "./SortIcon";
 import AlarmIcon from "./AlarmIcon";
 import SMSIcon from "./SMSIcon";
 import LockIcon from "./LockIcon";
+import ViewIcon from "./ViewIcon";
+import PlusIcon from "./PlusIcon"
 
 export {
   TrashIcon,
@@ -42,4 +44,6 @@ export {
   AlarmIcon,
   SMSIcon,
   LockIcon,
+  ViewIcon,
+  PlusIcon
 };

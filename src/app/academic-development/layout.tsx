@@ -13,7 +13,7 @@ export default function LayoutSuperAdmin({
     <main className="flex w-full min-h-screen shadow-lg bg-primary text-primary">
       <NewSidebar />
       <div
-        className={`transition-all bg-primary w-full min-h-screen ease-linear  duration-[400ms] absolute ${
+        className={`transition-all bg-primary w-full min-h-screen ease-linear  duration-[400ms] absolute overflow-hidden ${
           isActive ? "pl-[104px]" : "pl-[256px]"
         } text-white`}
       >
