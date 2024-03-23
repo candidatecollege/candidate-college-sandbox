@@ -9,8 +9,13 @@ module.exports = {
     extend: {
       animation: {
         skeleton: "skeleton 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        hilang: "hilang 0.4s forwards",
       },
       keyframes: {
+        hilang: {
+          "0%": { opacity: 1 },
+          "100%": { opacity: 0, display: "none" },
+        },
         skeleton: {
           "0%, 100%": { opacity: 1 },
           "50%": {

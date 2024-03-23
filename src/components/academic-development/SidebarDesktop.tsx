@@ -29,9 +29,9 @@ export default function SidebarDesktop({
   const handleClick = () => setOpen(false)
   return (
     <section
-      className={`${styles.border_nav} z-10 transition-all ${
+      className={`${styles.border_nav}  z-10 transition-all ${
         isActive
-          ? "animate__animated animate__fadeOut  !absolute inset-y-0"
+          ? "  animate-hilang  !absolute inset-y-0"
           : "animate__animated animate__fadeIn"
       }  flex flex-col bg-[#0000008F] h-full py-6 w-[256px] `}
     >

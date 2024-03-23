@@ -50,7 +50,9 @@ export default function SidebarMobile({
       </div>
       <Separator />
       <div className="mt-4 px-4 overflow-y-auto mx-auto">
-        <h2 className="text-[#FFFFFF52] font-medium text-[11px] px-3">MAIN</h2>
+        <h2 className="text-[#FFFFFF52] font-medium text-[11px] text-center px-3">
+          MAIN
+        </h2>
         <ul className="flex mt-2 relative z- flex-col">
           {navLink.map(({ title, path, icon }: any, index: number) => {
             return (
