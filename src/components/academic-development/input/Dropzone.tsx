@@ -21,8 +21,9 @@ function DropInputFile({
   return (
     <Dropzone
       accept={{
-        "image/*": [".jpeg", ".jpg", ".png", ".webp"],
+        "image/webp": [],
       }}
+      maxSize={500000}
       onDrop={(e) => {
         setPath(e[0].name);
         setValue(e[0]);
@@ -44,8 +45,7 @@ function DropInputFile({
             </div>
             {fileRejections.length !== 0 && (
               <p className="text-red-500 text-center mt-2">
-                File not accepted. Please upload a JPEG, JPG, PNG, or WEBP image
-                under 500KB.
+                File not accepted. Please upload a WEBP image under 500KB.
               </p>
             )}
             {isDragActive ? (
