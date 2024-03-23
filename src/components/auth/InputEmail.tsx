@@ -24,7 +24,7 @@ export default function InputEmail({
         onBlur={(e) => {
           !e.target.value && setIsFocusEmail(false);
         }}
-        className={`absolute z-10   inset-2 outline-none bg-transparent`}
+        className={`absolute z-10   inset-2 outline-none bg-transparent text-white`}
       />
 
       <div

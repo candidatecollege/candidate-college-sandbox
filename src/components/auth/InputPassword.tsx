@@ -30,12 +30,12 @@ export default function InputPassword({
         onBlur={(e) => {
           !e.target.value && setisFocusPassword(false);
         }}
-        className={`absolute z-10 auth-input-password  inset-2 right-9 outline-none bg-transparent`}
+        className={`absolute z-10 auth-input-password  inset-2 right-9 outline-none bg-transparent text-white`}
       />
 
       <div
         onClick={() => setIsHide((v) => !v)}
-        className="absolute text-[22px] z-10 cursor-pointer right-2 "
+        className="absolute text-[22px] z-10 cursor-pointer right-2 text-white"
       >
         {isHide ? <FaRegEyeSlash /> : <FaRegEye />}
       </div>

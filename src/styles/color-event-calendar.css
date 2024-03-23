@@ -1,0 +1,75 @@
+:root {
+  --rmdp-primary-white: white;
+  --rmdp-secondary-white: #616f78;
+  --rmdp-shadow-white: #000;
+  --rmdp-today-white: #0E2735;
+  --rmdp-hover-white: #FFDE59;
+  --rmdp-deselect-white: #FFDE59;
+}
+
+.white .rmdp-wrapper {
+  border: 1px solid var(--rmdp-primary-white);
+}
+
+.white .rmdp-panel-body li {
+  background-color: var(--rmdp-primary-white);
+}
+
+.white .rmdp-week-day {
+  color: var(--rmdp-secondary-white);
+}
+
+.white .rmdp-day.rmdp-deactive {
+  color: var(--rmdp-today-white);
+}
+
+.white .rmdp-range {
+  background-color: var(--rmdp-primary-white);
+}
+
+.white .rmdp-arrow {
+  border: solid var(--rmdp-primary-white);
+  border-width: 0 2px 2px 0;
+}
+
+.white .rmdp-arrow-container:hover {
+  background-color: var(--rmdp-hover-white);
+}
+
+.white .rmdp-panel-body::-webkit-scrollbar-thumb {
+  background: var(--rmdp-primary-white) !important;
+}
+
+.white .rmdp-day.rmdp-today span {
+  background-color: var(--rmdp-today-white);
+}
+
+.white .rmdp-rtl .rmdp-panel {
+  border-left: unset;
+  border-right: 1px solid var(--rmdp-secondary-white);
+}
+
+.white .rmdp-day.rmdp-selected span:not(.highlight) {
+  background-color: var(--rmdp-today-white);
+}
+
+.white .rmdp-day:not(.rmdp-day-hidden) span:hover {
+  background-color: var(--rmdp-hover-white) !important;
+}
+
+.white .b-deselect {
+  color: var(--rmdp-deselect-white);
+  background-color: white;
+}
+
+.white .rmdp-action-button {
+  color: var(--rmdp-primary-white);
+}
+
+.white .rmdp-button:not(.rmdp-action-button) {
+  background-color: var(--rmdp-primary-white);
+}
+
+.white .rmdp-button:not(.rmdp-action-button):hover {
+  background-color: var(--rmdp-deselect-white);
+}
