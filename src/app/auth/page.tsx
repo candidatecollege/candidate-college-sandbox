@@ -39,8 +39,10 @@ const Auth: React.FC<any> = ({ type }) => {
             className="w-[142px]"
             src={"/logo-full-cc.png"}
           />
-          <h1 className="text-4xl font-bold">Log In To Your Account</h1>
-          <h2 className="text-sm mt-2">
+          <h1 className="text-4xl font-bold text-white">
+            Log In To Your Account
+          </h1>
+          <h2 className="text-sm mt-2 text-white">
             Manage All Data For CC&apos;s Website
           </h2>
           <form onSubmit={handleLogin}>
@@ -75,7 +77,7 @@ const Auth: React.FC<any> = ({ type }) => {
               )}
             </button>
           </form>
-          <p className="text-xs  mt-5 text-center">
+          <p className="text-xs  mt-5 text-center text-white">
             Don&apos;t Have An Account?{" "}
             <span className="text-secondary">Contact Your Admin</span>
           </p>

@@ -70,7 +70,7 @@ export default function Welcome() {
       <div className="bg-secondary right-0 top-0 absolute w-[40%] aspect-square blur-3xl ke-2" />
       <div className="bg-[#5EACDD] right-0 bottom-0 absolute w-[40%] aspect-square blur-3xl ke-3" />
       <div className="bg-secondary left-0 bottom-0 absolute w-[40%] aspect-square blur-3xl ke-4" />
-      <div className="absolute z-30 font-extrabold text-[86px] px-14  inset-0 flex justify-center items-center">
+      <div className="absolute z-30 font-extrabold text-[86px] px-14  inset-0 flex justify-center items-center text-white">
         Welcome Back!
       </div>
     </section>

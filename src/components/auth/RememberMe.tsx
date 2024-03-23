@@ -18,7 +18,9 @@ export default function RememberMe({
         {rememberme ? <IoCheckmark /> : null}
       </div>
 
-      <label htmlFor="rememberme">Remember Me</label>
+      <label htmlFor="rememberme" className="text-white">
+        Remember Me
+      </label>
     </div>
   );
 }
