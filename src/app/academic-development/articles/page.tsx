@@ -1,45 +1,24 @@
 // Import Packages
 "use client"
-import { useEffect, useState } from "react"
-import axios from "axios"
+import { useState } from "react"
+
+// Import Hooks
+import { useArticlesData } from "@/hooks/useArticlesData"
+
+// Import Icons
+import {PlusIcon} from "@/components/icons"
 
 // Import Components
 import Navbar from "@/components/superadmin/navbar"
 import CardArticle from "@/components/academic-development/articles/CardArticle"
 
-// Import Icons
-import {PlusIcon} from "@/components/icons"
-
 // Import Styles
 import "@/styles/scrollbar-custom.css"
 
-
 export default function PageArticlesAcdev() {
   // Variables
-  const [articles, setArticles] = useState<any>([])
   const [isHovered, setIsHovered] = useState<boolean>(false)
-
-  // Used to retrieve all articles data
-  const fetchAllArticles = async () => {
-    try {
-      const response = await axios.get(`/api/articles`)
-
-      // Used to sort data from current date to earliest date
-      const sortedData = response.data.data.sort((a:  any, b: any) => {
-        const dateA: any = new Date(a. created_at)
-        const dateB: any = new Date(b.created_at)
-        return dateB - dateA
-      })
-
-      setTimeout(() => {
-        setArticles(sortedData)
-      }, 1000)
-      
-    }
-    catch(error) {
-      console.log(error)
-    }
-  }
+  const {articles, error} = useArticlesData()
 
   // Used to custom date format
   const formatDate = (date: any) => {
@@ -62,11 +41,11 @@ export default function PageArticlesAcdev() {
   const handleHover = () => setIsHovered(true)
   const handleMouseLeave = () => setIsHovered(false)
 
-  // Render Functions
-  useEffect(() => {
-    fetchAllArticles()
-  })
-  
+  // Used to send error messages to user when loading articles fail
+  if (error) {
+    return <div>Err: {error}</div>
+  }
+
   return (
     <main>
       {/* Navbar */}
