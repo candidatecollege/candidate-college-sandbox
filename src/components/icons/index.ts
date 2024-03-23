@@ -17,6 +17,7 @@ import BookIcon from "./BookIcon";
 import RankingIcon from "./RankingIcon";
 import SortIcon from "./SortIcon";
 import AlarmIcon from "./AlarmIcon";
+import DirectSendIcon from "./DirectSendIcon";
 import SMSIcon from "./SMSIcon";
 import LockIcon from "./LockIcon";
 import ViewIcon from "./ViewIcon";
@@ -42,6 +43,7 @@ export {
   SortIcon,
   RankingIcon,
   AlarmIcon,
+  DirectSendIcon,
   SMSIcon,
   LockIcon,
   ViewIcon,
