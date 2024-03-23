@@ -1,7 +1,9 @@
 // Import Packages
 "use client"
-import {useEffect, useState} from "react"
-import axios from "axios"
+import {useState} from "react"
+
+// Import Hooks
+import {useEventsData} from "@/hooks/useEventsData"
 
 // Import Icons
 import TimerIcon from "@/components/icons/TimerIcon"
@@ -32,59 +34,16 @@ import {
 } from "@/utils/dateTime"
 
 export default function PageEventsSuperAdmin() {
-  // Variable
-  const [events, setEvents] = useState<any>([])
-  const [ongoingEvents, setOngoingEvents] = useState<any>([])
-  const [upcomingEvents, setUpcomingEvents] = useState<any>([])
+  // Variables
   const [showComingSoon, setShowComingSoon] = useState<boolean>(false)
-  const [ongoingEventsAvailable, setOngoingEventsAvailable] = useState<boolean>(false)
-  const [upcomingEventsAvailable, setUpcomingEventsAvailable] = useState<boolean>(false)
-
-  // Used to retrieve all event data
-  const fetchAllEvents = async() => {
-    try {
-      const response = await axios.get(`https://candidate-college.vercel.app/api/events`)
-
-      // Used to sort data form earliest date to current date
-      const sortedData = response.data.data.sort((a: any, b: any) => {
-        const dateA: any = new Date(a.start_date_time)
-        const dateB: any = new Date(b.start_date_time)
-        return dateA - dateB
-      })
-
-      // Variable
-      let ongoingEventsCount = 0
-      let upcomingEventsCount = 0
-      const currentDate = new Date()
-      const ongoingEvents: any = []
-      const upcomingEvents: any = []
-
-      // Used to retrieve ongoing and upcoming events data
-      sortedData.forEach((event: any) => {
-        const startDate = new Date(event.start_date_time)
-        const endDate = new Date(event.end_date_time)
-
-        if (currentDate >= startDate && currentDate <= endDate && ongoingEventsCount < 2) {
-          ongoingEvents.push(event)
-          ongoingEventsCount++
-        } else if (currentDate < startDate && upcomingEventsCount < 5) {
-          upcomingEvents.push(event)
-          upcomingEventsCount++
-        }
-      })
-
-      setTimeout(() => {
-        setEvents(sortedData)
-        setOngoingEvents(ongoingEvents)
-        setUpcomingEvents(upcomingEvents)
-        setOngoingEventsAvailable(ongoingEvents.length > 0)
-        setUpcomingEventsAvailable(upcomingEvents.length > 0)
-      }, 1500)
-    }
-    catch(error) {
-      console.log(error)
-    }
-  }
+  const {
+    events,
+    ongoingEvents,
+    ongoingEventsAvailable,
+    upcomingEvents,
+    upcomingEventsAvailable,
+    error
+  } = useEventsData()
 
   // Card Event Data
   const StatisticEvent = [
@@ -111,10 +70,10 @@ export default function PageEventsSuperAdmin() {
   // Used to change into coming soon page
   const handleClick = () => setShowComingSoon(true)
 
-  // Running Function
-  useEffect(() => {
-    fetchAllEvents()
-  })
+  // Used to send error messages to user when loading events fail
+  if (error) {
+    return <div>Error: {error}</div>
+  }
 
   return (
     <main>
@@ -125,6 +84,7 @@ export default function PageEventsSuperAdmin() {
         placeholder="Search for anything"
       />
 
+      {/* Events */}
       {showComingSoon ? (
         <ComingSoon />
       ) : (
