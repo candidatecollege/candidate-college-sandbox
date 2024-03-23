@@ -30,7 +30,7 @@ export default function NewSidebar() {
       icon: <DashboardIcon />,
     },
     { title: "Article", path: "/superadmin/articles", icon: <ArticleIcon /> },
-    { title: "Event", path: "/superadmin/event", icon: <StickNoteIcon /> },
+    { title: "Event", path: "/superadmin/events", icon: <StickNoteIcon /> },
     {
       title: "Division",
       path: "/superadmin/division",
