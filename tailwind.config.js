@@ -1,3 +1,5 @@
+const { transform } = require('typescript')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -22,6 +24,36 @@ module.exports = {
             opacity: 0.5,
           },
         },
+        slideUp: {
+          from: {
+            transform: "translateY(100%)"
+          },
+          to: {
+            transform: "translateY(0%)"
+          }
+        },
+        slideLeft: {
+          from : {
+            transform: "translateX(100%)"
+          },
+          to: {
+            transform: "translateX(0%)"
+          }
+        },
+        slideInFromRight: {
+          from: {
+            transform: "translateX(100%) translateY(-100%)"
+          },
+          to: {
+            transform: "translateX(0%) translateY(0%)"
+          }
+        }
+
+      },
+      animation: {
+        slideUp: "slideUp 1.4s ease",
+        slideLeft: "slideLeft 1.4s ease",
+        slideInFromRight: "slideInFromRight 1.4s ease"
       },
       colors: {
         primary: "#1B4E6B",
@@ -45,6 +77,5 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/typography"),
-    require("tailwind-scrollbar-hide"),
-  ],
+  ]
 };
