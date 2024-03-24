@@ -1,13 +1,16 @@
+import {useState} from "react"
 import Image from "next/image";
 
 import { LogoutIcon } from "@/components/icons";
 
 import styles from "@/styles/border.module.css";
-
 import iconStyles from "@/styles/icon.module.css";
 import useActive from "@/hooks/useActive";
 import Separator from "./Separator";
 import Link from "next/link";
+
+// Import Components
+import Logout from "../Logout";
 
 export default function SidebarDesktop({
   navLink,
@@ -17,6 +20,11 @@ export default function SidebarDesktop({
   pathname: string;
 }) {
   const { isActive } = useActive();
+  const [open, setOpen] = useState<boolean>(false)
+
+  // Used to open log out popup
+  const handleClick = () => setOpen(false)
+
   return (
     <section
       className={`${styles.border_nav} z-10 transition-all ${
@@ -81,12 +89,14 @@ export default function SidebarDesktop({
             For creating or adding new things
           </h4>
           <button
-            className={` duration-300 ${iconStyles.logout_icon} hover:bg-primary transition-all hover:text-secondary p-3 drop-shadow-md justify-center rounded-xl items-center w-full  text-[14px] font-semibold bg-secondary flex gap-1`}
+            className={` duration-300 ${iconStyles.logout_icon} hover:bg-primary transition-all hover:text-secondary p-3 drop-shadow-md justify-center rounded-xl items-center w-full  text-[14px] font-semibold bg-secondary flex gap-1`} onClick = {() => setOpen(true)}
           >
             <LogoutIcon /> Log Out
           </button>
         </div>
       </div>
+      {/* Logout Modal */}
+      <Logout open={open} onClick={handleClick}/>
     </section>
   );
 }
