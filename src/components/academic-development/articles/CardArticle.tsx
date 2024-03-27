@@ -22,7 +22,7 @@ interface CardArticleProps {
   title: string,
   date: string,
   view: number,
-  slug: string
+  slug: string,
 }
 
 // Component
@@ -55,8 +55,10 @@ const CardArticle: React.FC<CardArticleProps> = ({
         <Image 
             src={`/uploads/${img}`}
             alt={title}
-            width={0}
-            height={0}
+            width={100}
+            height={53}
+            quality={70}
+            priority={true} 
             className="w-full rounded-xl"
         />
         {/* Category */}
