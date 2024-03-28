@@ -1,4 +1,4 @@
-const { transform } = require('typescript')
+const { transform } = require("typescript");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
     extend: {
       animation: {
         skeleton: "skeleton 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        hilang: "hilang 0.4s forwards",
+        hilang: "hilang 0.4s cubic-bezier(0.4, 0, 0.6, 1) forwards",
       },
       keyframes: {
         hilang: {
@@ -26,34 +26,33 @@ module.exports = {
         },
         slideUp: {
           from: {
-            transform: "translateY(100%)"
+            transform: "translateY(100%)",
           },
           to: {
-            transform: "translateY(0%)"
-          }
+            transform: "translateY(0%)",
+          },
         },
         slideLeft: {
-          from : {
-            transform: "translateX(100%)"
+          from: {
+            transform: "translateX(100%)",
           },
           to: {
-            transform: "translateX(0%)"
-          }
+            transform: "translateX(0%)",
+          },
         },
         slideInFromRight: {
           from: {
-            transform: "translateX(100%) translateY(-100%)"
+            transform: "translateX(100%) translateY(-100%)",
           },
           to: {
-            transform: "translateX(0%) translateY(0%)"
-          }
-        }
-
+            transform: "translateX(0%) translateY(0%)",
+          },
+        },
       },
       animation: {
         slideUp: "slideUp 1.4s ease",
         slideLeft: "slideLeft 1.4s ease",
-        slideInFromRight: "slideInFromRight 1.4s ease"
+        slideInFromRight: "slideInFromRight 1.4s ease",
       },
       colors: {
         primary: "#1B4E6B",
@@ -75,7 +74,5 @@ module.exports = {
   corePlugins: {
     preflight: true,
   },
-  plugins: [
-    require("@tailwindcss/typography"),
-  ]
+  plugins: [require("@tailwindcss/typography")],
 };

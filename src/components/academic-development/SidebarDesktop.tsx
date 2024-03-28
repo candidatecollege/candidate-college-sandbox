@@ -1,4 +1,4 @@
-import {useState} from "react"
+import { useState } from "react";
 import Image from "next/image";
 
 import { LogoutIcon } from "@/components/icons";
@@ -23,10 +23,10 @@ export default function SidebarDesktop({
 }) {
   const { isActive } = useActive();
   const { setIsActive } = useAlert();
-  const [open, setOpen] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false);
 
   // Used to open log out popup
-  const handleClick = () => setOpen(false)
+  const handleClick = () => setOpen(false);
   return (
     <section
       className={`${styles.border_nav}  z-10 transition-all ${
@@ -99,7 +99,7 @@ export default function SidebarDesktop({
         </div>
       </div>
       {/* Logout Modal */}
-      <Logout open={open} onClick={handleClick}/>
+      <Logout open={open} onClick={handleClick} />
     </section>
   );
 }
