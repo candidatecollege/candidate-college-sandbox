@@ -11,7 +11,10 @@ module.exports = {
     extend: {
       animation: {
         skeleton: "skeleton 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        hilang: "hilang 0.4s cubic-bezier(0.4, 0, 0.6, 1) forwards",
+        hilang: "hilang 0.4s forwards",
+        slideUp: "slideUp 1.4s ease",
+        slideLeft: "slideLeft 1.4s ease",
+        slideInFromRight: "slideInFromRight 1.4s ease",
       },
       keyframes: {
         hilang: {
@@ -49,11 +52,7 @@ module.exports = {
           },
         },
       },
-      animation: {
-        slideUp: "slideUp 1.4s ease",
-        slideLeft: "slideLeft 1.4s ease",
-        slideInFromRight: "slideInFromRight 1.4s ease",
-      },
+
       colors: {
         primary: "#1B4E6B",
         secondary: "#FFDE59",
